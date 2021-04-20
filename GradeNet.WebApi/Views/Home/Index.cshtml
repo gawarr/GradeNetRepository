@@ -1,0 +1,40 @@
+﻿@model GradeNet.Web.Infrastructure.ViewModels.UserViewModel
+@{
+    ViewBag.Title = "GradeNet";
+}
+
+<div class="jumbotron jumbotron-fluid">
+    <div class="container">
+        <h1 class="display-4 margin-top-0">GradeNet</h1>
+        <p class="lead">Twój dziennik elektroniczny</p>
+    </div>
+</div>
+
+<div class="logForm">
+    <div class="row">
+        <div class="col-md-4">
+            <h2>Zaloguj</h2>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-5">
+            <br />
+
+            @using (Html.BeginForm(FormMethod.Post))
+            {
+                @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+
+                @Html.TextBoxFor(m => Model.Email, new { @type = "email", @placeholder = "Adres e-mail" })<br /><br />
+                @Html.TextBoxFor(m => Model.Password, new { @type = "password", @placeholder = "Hasło" })<br /><br />
+
+                <input type="submit" value="Zaloguj" />
+            }
+
+        </div>
+        <div class="col-md-2">
+        </div>
+        <div class="col-md-5">
+            cos
+        </div>
+    </div>
+</div>
