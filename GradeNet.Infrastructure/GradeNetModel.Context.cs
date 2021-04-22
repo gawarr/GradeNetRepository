@@ -36,5 +36,18 @@ namespace GradeNet.Infrastructure
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<UserGet_Result>("UserGet", userIdParameter);
         }
+    
+        public virtual ObjectResult<Nullable<int>> CheckLoginDetails(string email, string password)
+        {
+            var emailParameter = email != null ?
+                new ObjectParameter("Email", email) :
+                new ObjectParameter("Email", typeof(string));
+    
+            var passwordParameter = password != null ?
+                new ObjectParameter("Password", password) :
+                new ObjectParameter("Password", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("CheckLoginDetails", emailParameter, passwordParameter);
+        }
     }
 }

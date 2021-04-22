@@ -1,4 +1,6 @@
 ﻿using GradeNet.Core.Interfaces;
+using GradeNet.Core.Models;
+using GradeNet.Infrastructure.Helpers;
 using GradeNet.Infrastructure.Interfaces;
 using GradeNet.Infrastructure.Repositories;
 using GradeNet.Infrastructure.ViewModels;
@@ -24,11 +26,7 @@ namespace GradeNet.Infrastructure.Managers
             try
             {
                 var user = _userRepository.GetUser(userId);
-                UserViewModel model = new UserViewModel()
-                {
-                    Email = user.Email,
-                    Password = user.Password
-                };
+                UserViewModel model = new UserViewModel(user.Email, user.Password);
 
                 return model;
             }
@@ -36,6 +34,13 @@ namespace GradeNet.Infrastructure.Managers
             {
                 throw;
             }
+        }
+
+        public bool CheckLoginDetails(UserViewModel model)
+        {
+            UserModel user = new UserModel(model.Email, UserHelper.MD5Hash(model.Password));
+
+            return _userRepository.CheckLoginDetails(user);
         }
     }
 }

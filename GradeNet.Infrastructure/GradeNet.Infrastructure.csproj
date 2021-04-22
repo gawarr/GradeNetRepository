@@ -65,6 +65,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>GradeNetModel.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\UserHelper.cs" />
     <Compile Include="Interfaces\IUserManager.cs" />
     <Compile Include="Managers\UserManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

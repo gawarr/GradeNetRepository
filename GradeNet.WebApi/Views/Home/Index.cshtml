@@ -1,4 +1,4 @@
-﻿@model GradeNet.Web.Infrastructure.ViewModels.UserViewModel
+﻿@model GradeNet.Infrastructure.ViewModels.UserViewModel
 @{
     ViewBag.Title = "GradeNet";
 }
@@ -17,24 +17,29 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-md-5">
-            <br />
-
-            @using (Html.BeginForm(FormMethod.Post))
+        <div class="col-md-5 logFormContent">
+           @using (Html.BeginForm(FormMethod.Post))
             {
-                @Html.ValidationSummary(false, "", new { @class = "text-danger" })
-
-                @Html.TextBoxFor(m => Model.Email, new { @type = "email", @placeholder = "Adres e-mail" })<br /><br />
-                @Html.TextBoxFor(m => Model.Password, new { @type = "password", @placeholder = "Hasło" })<br /><br />
-
-                <input type="submit" value="Zaloguj" />
+                @Html.AntiForgeryToken()
+                <div class="form-horizontal">
+                    <div class="form-group">
+                        @Html.TextBoxFor(m => Model.Email, new { @type = "email", @placeholder = "Adres e-mail" })
+                        @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="form-group">
+                        @Html.TextBoxFor(m => Model.Password, new { @type = "password", @placeholder = "Hasło" })
+                        @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="form-group">
+                            <input type="submit" value="Zaloguj" class="btn btn-default" />
+                    </div>
+                </div>
             }
-
         </div>
         <div class="col-md-2">
         </div>
-        <div class="col-md-5">
-            cos
+        <div class="col-md-5 index-tab-content">
+            Tu będą reklamy, bo za coś hajs trzeba mieć.
         </div>
     </div>
 </div>

@@ -12,19 +12,35 @@ namespace GradeNet.Infrastructure.Repositories
     {
         public UserModel GetUser(int userId)
         {
-            var user = new UserModel();
-
             try
             {
+                UserModel user;
                 using (GradeNet_Entities context = new GradeNet_Entities())
                 {
                     var result = context.UserGet(userId).FirstOrDefault();
 
-                    user.Email = result.Email;
-                    user.Password = result.Password;
+                    user = new UserModel(result.Email, result.Password);
                 }
-
                 return user;
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
+
+        public bool CheckLoginDetails(UserModel user)
+        {
+            try
+            {
+                bool isCorrrect;
+                using (GradeNet_Entities context = new GradeNet_Entities())
+                {
+                    var result = Convert.ToBoolean(context.CheckLoginDetails(user.Email, user.Password).FirstOrDefault());
+
+                    isCorrrect = result;
+                }
+                return isCorrrect;
             }
             catch (Exception ex)
             {

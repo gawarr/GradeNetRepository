@@ -8,8 +8,20 @@ namespace GradeNet.Core.Models
 {
     public class UserModel
     {
-        public int UserId { get; set; }
-        public string Email { get; set; }
+        public int UserId      { get; set; }
+        public string Email    { get; set; }
         public string Password { get; set; }
+        public string Cassword { get; set; }
+
+        public UserModel()
+        {
+
+        }
+
+        public UserModel(string email, string password)
+        {
+            Email = email;
+            Password = password;
+        }
     }
 }

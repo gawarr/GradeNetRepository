@@ -10,5 +10,6 @@ namespace GradeNet.Core.Interfaces
     public interface IUserRepository
     {
         UserModel GetUser(int userId);
+        bool CheckLoginDetails(UserModel user);
     }
 }

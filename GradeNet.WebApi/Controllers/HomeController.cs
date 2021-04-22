@@ -19,15 +19,19 @@ namespace GradeNet.WebApi.Controllers
 
         public ActionResult Index()
         {
-            var u = _userManager.GetUser(1);
             return View(new UserViewModel());
         }
 
         [HttpPost]
         public ActionResult Index(UserViewModel user)
         {
+            if (_userManager.CheckLoginDetails(user))
+            {
+                return RedirectToAction("About");
+            }
             return View();
         }
+
         public ActionResult About()
         {
             ViewBag.Message = "Your application description page.";
