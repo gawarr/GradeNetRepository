@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Security;
 
 namespace GradeNet.WebApi.Controllers
 {
@@ -27,23 +28,27 @@ namespace GradeNet.WebApi.Controllers
         {
             if (_userManager.CheckLoginDetails(user))
             {
-                return RedirectToAction("About");
+                FormsAuthentication.SetAuthCookie(user.Email, false);
+                return View();
             }
             return View();
         }
 
+        [Authorize]
         public ActionResult About()
         {
-            ViewBag.Message = "Your application description page.";
+            ViewBag.Message = "Your application description page. " + User.Identity.Name;
 
             return View();
         }
 
+        [Authorize(Roles = "testowe_uprawnienie")]
         public ActionResult Contact()
         {
             ViewBag.Message = "Your contact page.";
+            FormsAuthentication.SignOut();
 
-            return View();
+            return RedirectToAction("Index");
         }
     }
 }

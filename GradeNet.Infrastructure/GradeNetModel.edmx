@@ -9,6 +9,9 @@
           <Parameter Name="Email" Type="varchar" Mode="In" />
           <Parameter Name="Password" Type="varchar" Mode="In" />
         </Function>
+        <Function Name="PermisionsOfUserGet" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="User">
+          <Parameter Name="Email" Type="varchar" Mode="In" />
+        </Function>
         <Function Name="UserGet" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="User">
           <Parameter Name="UserId" Type="int" Mode="In" />
         </Function>
@@ -24,6 +27,9 @@
           <FunctionImport Name="CheckLoginDetails" ReturnType="Collection(Int32)">
             <Parameter Name="Email" Mode="In" Type="String" />
             <Parameter Name="Password" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="PermisionsOfUserGet" ReturnType="Collection(String)">
+            <Parameter Name="Email" Mode="In" Type="String" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="UserGet_Result">
@@ -47,6 +53,7 @@
             </ResultMapping>
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="CheckLoginDetails" FunctionName="GradeNet_PRODModel.Store.CheckLoginDetails" />
+          <FunctionImportMapping FunctionImportName="PermisionsOfUserGet" FunctionName="GradeNet_PRODModel.Store.PermisionsOfUserGet" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
