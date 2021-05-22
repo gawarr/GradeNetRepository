@@ -1,0 +1,22 @@
+﻿<script src="~/Content/scripts.js"></script>
+
+<div class="container">
+    <ul class="nav text-center">
+        <li>
+            <a class="nav-link" aria-current="page" href="User/UserProfile">@User.Identity.Name</a>
+        </li>
+
+        @if (User.IsInRole("teacher"))
+        {
+            <li>
+                <a class="nav-link" aria-current="page" href="">Lista klas</a>
+            </li>
+        }
+        @if (User.IsInRole("user_administration"))
+        {
+            <li>
+                <a class="nav-link" aria-current="page" href="">Administracja użytkownikami</a>
+            </li>
+        }
+    </ul>
+</div>

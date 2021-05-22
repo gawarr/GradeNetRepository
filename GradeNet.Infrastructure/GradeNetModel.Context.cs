@@ -58,5 +58,41 @@ namespace GradeNet.Infrastructure
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("PermisionsOfUserGet", emailParameter);
         }
+    
+        public virtual int LastSuccessfulLoginSet(string email)
+        {
+            var emailParameter = email != null ?
+                new ObjectParameter("Email", email) :
+                new ObjectParameter("Email", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("LastSuccessfulLoginSet", emailParameter);
+        }
+    
+        public virtual ObjectResult<string> RolesOfUserGet(string email)
+        {
+            var emailParameter = email != null ?
+                new ObjectParameter("Email", email) :
+                new ObjectParameter("Email", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("RolesOfUserGet", emailParameter);
+        }
+    
+        public virtual ObjectResult<UserDetailsGet_Result> UserDetailsGet(string email)
+        {
+            var emailParameter = email != null ?
+                new ObjectParameter("Email", email) :
+                new ObjectParameter("Email", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<UserDetailsGet_Result>("UserDetailsGet", emailParameter);
+        }
+    
+        public virtual ObjectResult<string> MainRolesOfUserGet(string email)
+        {
+            var emailParameter = email != null ?
+                new ObjectParameter("Email", email) :
+                new ObjectParameter("Email", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("MainRolesOfUserGet", emailParameter);
+        }
     }
 }

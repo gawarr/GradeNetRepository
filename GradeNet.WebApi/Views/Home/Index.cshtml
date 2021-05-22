@@ -3,43 +3,11 @@
     ViewBag.Title = "GradeNet";
 }
 
-<div class="jumbotron jumbotron-fluid">
-    <div class="container">
-        <h1 class="display-4 margin-top-0">GradeNet</h1>
-        <p class="lead">Twój dziennik elektroniczny</p>
-    </div>
-</div>
-
-<div class="logForm">
-    <div class="row">
-        <div class="col-md-4">
-            <h2>Zaloguj</h2>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-5 logFormContent">
-           @using (Html.BeginForm(FormMethod.Post))
-            {
-                @Html.AntiForgeryToken()
-                <div class="form-horizontal">
-                    <div class="form-group">
-                        @Html.TextBoxFor(m => Model.Email, new { @type = "email", @placeholder = "Adres e-mail" })
-                        @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
-                    </div>
-                    <div class="form-group">
-                        @Html.TextBoxFor(m => Model.Password, new { @type = "password", @placeholder = "Hasło" })
-                        @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
-                    </div>
-                    <div class="form-group">
-                            <input type="submit" value="Zaloguj" class="btn btn-default" />
-                    </div>
-                </div>
-            }
-        </div>
-        <div class="col-md-2">
-        </div>
-        <div class="col-md-5 index-tab-content">
-            Tu będą reklamy, bo za coś hajs trzeba mieć.
-        </div>
-    </div>
-</div>
+@if (!User.Identity.IsAuthenticated)
+ {
+     Html.RenderPartial("_Login", Model);
+ }
+ else
+ {
+     Html.RenderPartial("_Menu", Model);
+ } 

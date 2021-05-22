@@ -25,9 +25,7 @@ namespace GradeNet.Infrastructure.ViewModels
         public string Password { get; set; }
 
         [DisplayName("Powtórz hasło")]
-        [MinLength(5, ErrorMessage = "Minimalna długość znaków 5.")]
-        [MaxLength(32, ErrorMessage = "Maksymalna długość znaków 32.")]
-        [Required(ErrorMessage = "* Pole jest wymagane!")]
+        [Compare("Password", ErrorMessage = "Hasła różnią się.")]
         [DataType(DataType.Password)]
         public string CPassword { get; set; }
 

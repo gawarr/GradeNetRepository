@@ -1,0 +1,77 @@
+﻿@model GradeNet.Infrastructure.ViewModels.UserDetailsViewModel
+
+@{
+    ViewBag.Title = @User.Identity.Name;
+    string name = String.IsNullOrEmpty(Model.SecondName) ? $"{Model.FirstName} {Model.Surname}" : $"{Model.FirstName} {Model.SecondName} {Model.Surname}";
+
+    string address = String.IsNullOrEmpty(Model.Prefix) ? $"{Model.Place} {Model.HouseNumber}": $"{Model.Place} {Model.Prefix} {Model.Street} {Model.HouseNumber}";
+    address += String.IsNullOrEmpty(Model.ApartmentNumber) ? "" : $"/{Model.ApartmentNumber}";
+
+    string postAddress = $"{Model.PostalCode} {Model.PostOfficePlace}";
+}
+<div class="container">
+    <div class="row">
+        <div class="col-md-3" style="text-align: center;">
+            <h2>@name</h2>
+            <hr style="width: 90%; height: 1px;" />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <table class="table" style="width:40%;">
+                @if (!String.IsNullOrEmpty(Model.PESEL))
+                {
+                    <tr>
+                        <th style="width:40%;">
+                            @Html.DisplayNameFor(model => model.PESEL)
+                        </th>
+                        <td style="width:60%;">
+                            @Html.DisplayFor(modelItem => modelItem.PESEL)
+                        </td>
+                    </tr>
+                }
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Email)
+                    </th>
+                    <td>
+                        @User.Identity.Name
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.ContactNumber)
+                    </th>
+                    <td>
+                        @Html.DisplayFor(modelItem => modelItem.ContactNumber)
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        Miejsce zamieszkania
+                    </th>
+                    <td>
+                        @address
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        Poczta
+                    </th>
+                    <td>
+                        @postAddress
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.IsConfirmed)
+                    </th>
+                    <td>
+                        @Html.DisplayFor(modelItem => modelItem.IsConfirmed)
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
+

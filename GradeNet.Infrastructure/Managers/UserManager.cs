@@ -42,5 +42,25 @@ namespace GradeNet.Infrastructure.Managers
 
             return _userRepository.CheckLoginDetails(user);
         }
+
+        public void LastSuccessfulLoginSet(string email)
+        {
+            _userRepository.LastSuccessfulLoginSet(email);
+        }
+
+        public UserDetailsViewModel GetUserDetails(string email)
+        {
+            try
+            {
+                UserDetailsModel user = _userRepository.UserDetailsGet(email);
+                UserDetailsViewModel viewModel = new UserDetailsViewModel(user.FirstName, user.SecondName, user.Surname, user.ContactNumber, user.IsConfirmed, user.PESEL, user.Place, 
+                                                                          user.Prefix, user.Street, user.HouseNumber, user.ApartmentNumber, user.PostalCode, user.PostOfficePlace);
+                return viewModel;
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
     }
 }

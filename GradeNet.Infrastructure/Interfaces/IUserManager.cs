@@ -11,5 +11,7 @@ namespace GradeNet.Infrastructure.Interfaces
     {
         UserViewModel GetUser(int userId);
         bool CheckLoginDetails(UserViewModel model);
+        void LastSuccessfulLoginSet(string email);
+        UserDetailsViewModel GetUserDetails(string name);
     }
 }

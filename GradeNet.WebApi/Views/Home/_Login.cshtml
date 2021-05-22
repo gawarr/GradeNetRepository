@@ -1,0 +1,42 @@
+﻿@model GradeNet.Infrastructure.ViewModels.UserViewModel
+
+<div class="container titleBody">
+    <div class="row">
+        <div class="col-md-1">
+        </div>
+        <div class="col-md-4 logFormContent">
+            <h2>Logowanie</h2>
+            @using (Html.BeginForm(FormMethod.Post))
+            {
+                @Html.AntiForgeryToken()
+                <div class="form-horizontal">
+                    <div class="form-group">
+                        @Html.TextBoxFor(m => Model.Email, new { @type = "email", @placeholder = "Adres e-mail" })<br />
+                        @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="form-group">
+                        @Html.TextBoxFor(m => Model.Password, new { @type = "password", @placeholder = "Hasło" })<br />
+                        @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Zaloguj" class="btn btn-default" />
+                    </div>
+                    @if (!String.IsNullOrEmpty(ViewBag.Error))
+                    {
+                        <div class="form-group">
+                            <label class="text-danger">@ViewBag.Error</label>
+                        </div>
+                    }
+                </div>
+            }
+        </div>
+        <div class="col-md-2">
+        </div>
+        <div class="col-md-4 titleDiv">
+            <h1>GradeNet</h1>
+            <p class="lead">Twój dziennik elektroniczny</p>
+        </div>
+        <div class="col-md-1">
+        </div>
+    </div>
+</div>

@@ -26,26 +26,24 @@ namespace GradeNet.WebApi.Controllers
         [HttpPost]
         public ActionResult Index(UserViewModel user)
         {
+            if(String.IsNullOrWhiteSpace(user.Email) || String.IsNullOrWhiteSpace(user.Password))
+            {
+                ViewBag.Error = "Proszę uzupełnić wszystkie pola.";
+                return View();
+            }
             if (_userManager.CheckLoginDetails(user))
             {
                 FormsAuthentication.SetAuthCookie(user.Email, false);
-                return View();
+                _userManager.LastSuccessfulLoginSet(user.Email);
+                return RedirectToAction("Index");
             }
+            ViewBag.Error = "Błędy login lub hasło.";
             return View();
         }
 
         [Authorize]
-        public ActionResult About()
+        public ActionResult LogOut()
         {
-            ViewBag.Message = "Your application description page. " + User.Identity.Name;
-
-            return View();
-        }
-
-        [Authorize(Roles = "testowe_uprawnienie")]
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
             FormsAuthentication.SignOut();
 
             return RedirectToAction("Index");

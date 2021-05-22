@@ -9,7 +9,16 @@
           <Parameter Name="Email" Type="varchar" Mode="In" />
           <Parameter Name="Password" Type="varchar" Mode="In" />
         </Function>
+        <Function Name="LastSuccessfulLoginSet" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="User">
+          <Parameter Name="Email" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="MainRolesOfUserGet" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="User">
+          <Parameter Name="Email" Type="varchar" Mode="In" />
+        </Function>
         <Function Name="PermisionsOfUserGet" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="User">
+          <Parameter Name="Email" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="UserDetailsGet" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="User">
           <Parameter Name="Email" Type="varchar" Mode="In" />
         </Function>
         <Function Name="UserGet" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="User">
@@ -29,6 +38,18 @@
             <Parameter Name="Password" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="PermisionsOfUserGet" ReturnType="Collection(String)">
+          <Parameter Name="Email" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="LastSuccessfulLoginSet">
+          <Parameter Name="Email" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="RolesOfUserGet" ReturnType="Collection(String)">
+            <Parameter Name="Email" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="UserDetailsGet" ReturnType="Collection(GradeNet_PRODModel.UserDetailsGet_Result)">
+          <Parameter Name="Email" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="MainRolesOfUserGet" ReturnType="Collection(String)">
             <Parameter Name="Email" Mode="In" Type="String" />
           </FunctionImport>
         </EntityContainer>
@@ -36,6 +57,21 @@
           <Property Type="Int32" Name="UserId" Nullable="false" />
           <Property Type="String" Name="Password" Nullable="false" MaxLength="32" />
           <Property Type="String" Name="Email" Nullable="false" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="UserDetailsGet_Result">
+          <Property Type="String" Name="FirstName" Nullable="false" MaxLength="31" />
+          <Property Type="String" Name="SecondName" Nullable="true" MaxLength="31" />
+          <Property Type="String" Name="Surname" Nullable="false" MaxLength="63" />
+          <Property Type="String" Name="ContactNumber" Nullable="false" MaxLength="15" />
+          <Property Type="String" Name="PESEL" Nullable="true" MaxLength="11" />
+          <Property Type="Boolean" Name="IsConfirmed" Nullable="false" />
+          <Property Type="String" Name="Place" Nullable="false" MaxLength="32" />
+          <Property Type="String" Name="Prefix" Nullable="true" MaxLength="8" />
+          <Property Type="String" Name="Street" Nullable="true" MaxLength="32" />
+          <Property Type="String" Name="HouseNumber" Nullable="false" MaxLength="8" />
+          <Property Type="String" Name="ApartmentNumber" Nullable="true" MaxLength="8" />
+          <Property Type="String" Name="PostalCode" Nullable="false" MaxLength="6" />
+          <Property Type="String" Name="PostOfficePlace" Nullable="false" MaxLength="32" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -54,6 +90,27 @@
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="CheckLoginDetails" FunctionName="GradeNet_PRODModel.Store.CheckLoginDetails" />
           <FunctionImportMapping FunctionImportName="PermisionsOfUserGet" FunctionName="GradeNet_PRODModel.Store.PermisionsOfUserGet" />
+          <FunctionImportMapping FunctionImportName="LastSuccessfulLoginSet" FunctionName="GradeNet_PRODModel.Store.LastSuccessfulLoginSet" />
+          <FunctionImportMapping FunctionImportName="UserDetailsGet" FunctionName="GradeNet_PRODModel.Store.UserDetailsGet">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="GradeNet_PRODModel.UserDetailsGet_Result">
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="SecondName" ColumnName="SecondName" />
+                <ScalarProperty Name="Surname" ColumnName="Surname" />
+                <ScalarProperty Name="ContactNumber" ColumnName="ContactNumber" />
+                <ScalarProperty Name="PESEL" ColumnName="PESEL" />
+                <ScalarProperty Name="IsConfirmed" ColumnName="IsConfirmed" />
+                <ScalarProperty Name="Place" ColumnName="Place" />
+                <ScalarProperty Name="Prefix" ColumnName="Prefix" />
+                <ScalarProperty Name="Street" ColumnName="Street" />
+                <ScalarProperty Name="HouseNumber" ColumnName="HouseNumber" />
+                <ScalarProperty Name="ApartmentNumber" ColumnName="ApartmentNumber" />
+                <ScalarProperty Name="PostalCode" ColumnName="PostalCode" />
+                <ScalarProperty Name="PostOfficePlace" ColumnName="PostOfficePlace" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="MainRolesOfUserGet" FunctionName="GradeNet_PRODModel.Store.MainRolesOfUserGet" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

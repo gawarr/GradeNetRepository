@@ -47,5 +47,62 @@ namespace GradeNet.Infrastructure.Repositories
                 throw;
             }
         }
+
+        public void LastSuccessfulLoginSet(string email)
+        {
+            try
+            {
+                using(GradeNet_Entities context = new GradeNet_Entities())
+                    context.LastSuccessfulLoginSet(email);
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
+
+        public string MainRoleOfUserGet(string email)
+        {
+            try
+            {
+                string role = String.Empty;
+                using(GradeNet_Entities context = new GradeNet_Entities())
+                {
+                    var result = context.MainRolesOfUserGet(email).ToList();
+
+                    if (result.Count == 1)
+                        role = result[0];
+                    else
+                    {
+                        throw new Exception($"Błąd pobierania przypisanych ról głównych dla użytkownika : {email}.");
+                    }
+                }
+                return role;
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
+
+        public UserDetailsModel UserDetailsGet(string email)
+        {
+            try
+            {
+                UserDetailsModel user;
+                using (GradeNet_Entities context = new GradeNet_Entities())
+                {
+                    var result = context.UserDetailsGet(email).FirstOrDefault();
+
+                    user = new UserDetailsModel(result.FirstName, result.SecondName, result.Surname, result.ContactNumber, result.PESEL, result.IsConfirmed, result.Place, result.Prefix,
+                                                result.Street, result.HouseNumber, result.ApartmentNumber, result.PostalCode, result.PostOfficePlace);
+                }
+                return user;
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
     }
 }
