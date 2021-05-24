@@ -5,14 +5,15 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="GradeNet_PRODModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <Function Name="ClassesGet_ForYear" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="School">
+          <Parameter Name="Year" Type="int" Mode="In" />
+        </Function>
+        <Function Name="YearsGet" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="School" />
         <Function Name="CheckLoginDetails" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="User">
           <Parameter Name="Email" Type="varchar" Mode="In" />
           <Parameter Name="Password" Type="varchar" Mode="In" />
         </Function>
         <Function Name="LastSuccessfulLoginSet" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="User">
-          <Parameter Name="Email" Type="varchar" Mode="In" />
-        </Function>
-        <Function Name="MainRolesOfUserGet" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="User">
           <Parameter Name="Email" Type="varchar" Mode="In" />
         </Function>
         <Function Name="PermisionsOfUserGet" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="User">
@@ -52,6 +53,10 @@
           <FunctionImport Name="MainRolesOfUserGet" ReturnType="Collection(String)">
             <Parameter Name="Email" Mode="In" Type="String" />
           </FunctionImport>
+          <FunctionImport Name="YearsGet" ReturnType="Collection(Int32)" />
+          <FunctionImport Name="ClassesGet_ForYear" ReturnType="Collection(GradeNet_PRODModel.ClassesGet_ForYear_Result)">
+            <Parameter Name="Year" Mode="In" Type="Int32" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="UserGet_Result">
           <Property Type="Int32" Name="UserId" Nullable="false" />
@@ -72,6 +77,10 @@
           <Property Type="String" Name="ApartmentNumber" Nullable="true" MaxLength="8" />
           <Property Type="String" Name="PostalCode" Nullable="false" MaxLength="6" />
           <Property Type="String" Name="PostOfficePlace" Nullable="false" MaxLength="32" />
+        </ComplexType>
+        <ComplexType Name="ClassesGet_ForYear_Result">
+          <Property Type="Int32" Name="ClassId" Nullable="false" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="7" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -110,7 +119,15 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="MainRolesOfUserGet" FunctionName="GradeNet_PRODModel.Store.MainRolesOfUserGet" />
+          <FunctionImportMapping FunctionImportName="YearsGet" FunctionName="GradeNet_PRODModel.Store.YearsGet" />
+          <FunctionImportMapping FunctionImportName="ClassesGet_ForYear" FunctionName="GradeNet_PRODModel.Store.ClassesGet_ForYear">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="GradeNet_PRODModel.ClassesGet_ForYear_Result">
+                <ScalarProperty Name="ClassId" ColumnName="ClassId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

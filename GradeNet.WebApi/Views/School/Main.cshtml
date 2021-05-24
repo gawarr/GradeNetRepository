@@ -1,0 +1,94 @@
+﻿@model List<int>
+
+<style>
+    .thSelectDiv {
+        margin: 5px;
+        padding:10px;
+        text-align: center;
+        background: #545600;
+        font-weight: bold;
+        font-size: 120%;
+        color: white;
+        border-radius: 25px;
+    }
+
+    .selectDiv {
+        margin: 5px;
+        text-align: center;
+        background: #fff4b9;
+        border-radius: 25px;
+    }
+
+    .select {
+        margin: 10px;
+        width: 50%;
+        background: #fff4b911;
+        text-align-last: center;
+        border-style: none;
+        border-bottom: 1px solid black;
+    }
+
+    .col-md-2{
+        padding: 0 5px;
+    }
+</style>
+
+<script>
+    function GetClassesSelect() {
+        let year = document.getElementById("yearSelect").value;
+        //document.getElementById('selectDiv').innerHTML = '<p>' + year + '</p>';
+        //$('#classesList').append('<p>' + year + '</p>');
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("HtmlForClassSelectGet")',
+            dataType: 'json',
+            data: { year: year },
+            success: function (result) {
+                document.getElementById('selectDiv').innerHTML = result.content;
+            }
+        });
+    }
+
+    function GetLessonsSelect() {
+        alert('select lekcji');
+    }
+</script>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-pull-12">
+            <h2>Dziennik</h2>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-2">
+            <div class="thSelectDiv">
+                Rocznik
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="thSelectDiv">
+                Klasa
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-2">
+            <div class="selectDiv">
+                <select onchange='GetClassesSelect()' class="select" id="yearSelect">
+                    @foreach (int year in Model)
+                    {
+                        <option value="@year">@year</option>
+                    }
+                </select>
+            </div>
+        </div>
+        <div class="col-md-2" id="classesList">
+            <div class="selectDiv" id="selectDiv"></div>
+        </div>
+    </div>
+</div>
+
+<script>
+    GetClassesSelect();
+</script>

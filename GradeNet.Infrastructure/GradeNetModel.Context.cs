@@ -94,5 +94,19 @@ namespace GradeNet.Infrastructure
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("MainRolesOfUserGet", emailParameter);
         }
+    
+        public virtual ObjectResult<Nullable<int>> YearsGet()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("YearsGet");
+        }
+    
+        public virtual ObjectResult<ClassesGet_ForYear_Result> ClassesGet_ForYear(Nullable<int> year)
+        {
+            var yearParameter = year.HasValue ?
+                new ObjectParameter("Year", year) :
+                new ObjectParameter("Year", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<ClassesGet_ForYear_Result>("ClassesGet_ForYear", yearParameter);
+        }
     }
 }

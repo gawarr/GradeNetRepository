@@ -1,3 +1,4 @@
+using GradeNet.Infrastructure.Helpers;
 using GradeNet.Infrastructure.Interfaces;
 using GradeNet.Infrastructure.Managers;
 using System.Web.Mvc;
@@ -16,6 +17,8 @@ namespace GradeNet.WebApi
             // it is NOT necessary to register your controllers
 
             container.RegisterType<IUserManager, UserManager>();
+            container.RegisterType<ISchoolManager, SchoolManager>();
+            container.RegisterType<IHtmlRenderHelper, HtmlRenderHelper>();
 
             DependencyResolver.SetResolver(new UnityDependencyResolver(container));
         }

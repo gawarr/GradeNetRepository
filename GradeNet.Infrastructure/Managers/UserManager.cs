@@ -43,10 +43,8 @@ namespace GradeNet.Infrastructure.Managers
             return _userRepository.CheckLoginDetails(user);
         }
 
-        public void LastSuccessfulLoginSet(string email)
-        {
+        public void LastSuccessfulLoginSet(string email) =>
             _userRepository.LastSuccessfulLoginSet(email);
-        }
 
         public UserDetailsViewModel GetUserDetails(string email)
         {
