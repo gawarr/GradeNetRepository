@@ -9,5 +9,6 @@ namespace GradeNet.Infrastructure.Interfaces
     public interface IHtmlRenderHelper
     {
         string HtmlForClassSelectGet(int fromYear);
+        string HtmlForStudentsListGet(int classId);
     }
 }

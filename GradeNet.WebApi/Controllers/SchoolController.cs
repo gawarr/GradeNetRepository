@@ -32,8 +32,14 @@ namespace GradeNet.WebApi.Controllers
         [HttpPost]
         public JsonResult HtmlForClassSelectGet(int year)
         {
-            string content;
-            content = _HtmlRenderHelper.HtmlForClassSelectGet(year);
+            string content = _HtmlRenderHelper.HtmlForClassSelectGet(year);
+            return Json(new { content = content });
+        }
+
+        [HttpPost]
+        public JsonResult HtmlForStudentsListGet(int classId)
+        {
+            string content = _HtmlRenderHelper.HtmlForStudentsListGet(classId);
             return Json(new { content = content });
         }
     }

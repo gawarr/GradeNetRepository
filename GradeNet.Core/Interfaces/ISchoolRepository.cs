@@ -11,5 +11,6 @@ namespace GradeNet.Core.Interfaces
     {
         List<int> YearsGet();
         List<ClassModel> ClassesGet_ForYear(int fromYear);
+        List<StudentModel> StudentsGet(int classId);
     }
 }

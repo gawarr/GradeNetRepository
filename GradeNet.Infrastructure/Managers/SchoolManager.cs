@@ -22,5 +22,22 @@ namespace GradeNet.Infrastructure.Managers
         }
 
         public List<int> YearsGet() => _schoolRepository.YearsGet();
+
+        public List<StudentViewModel> StudentsGet(int classId)
+        {
+            try
+            {
+                var list = new List<StudentViewModel>();
+                var result = _schoolRepository.StudentsGet(classId);
+
+                list.AddRange(result.Select(x => new StudentViewModel(x.StudentId, x.FirstName, x.SecondName, x.Surname)));
+
+                return list;
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
     }
 }

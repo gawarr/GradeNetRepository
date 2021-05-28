@@ -8,6 +8,9 @@
         <Function Name="ClassesGet_ForYear" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="School">
           <Parameter Name="Year" Type="int" Mode="In" />
         </Function>
+        <Function Name="StudentsGet" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="School">
+          <Parameter Name="ClassId" Type="int" Mode="In" />
+        </Function>
         <Function Name="YearsGet" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="School" />
         <Function Name="CheckLoginDetails" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="User">
           <Parameter Name="Email" Type="varchar" Mode="In" />
@@ -55,7 +58,10 @@
           </FunctionImport>
           <FunctionImport Name="YearsGet" ReturnType="Collection(Int32)" />
           <FunctionImport Name="ClassesGet_ForYear" ReturnType="Collection(GradeNet_PRODModel.ClassesGet_ForYear_Result)">
-            <Parameter Name="Year" Mode="In" Type="Int32" />
+          <Parameter Name="Year" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="StudentsGet" ReturnType="Collection(GradeNet_PRODModel.StudentsGet_Result)">
+            <Parameter Name="ClassId" Mode="In" Type="Int32" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="UserGet_Result">
@@ -81,6 +87,12 @@
         <ComplexType Name="ClassesGet_ForYear_Result">
           <Property Type="Int32" Name="ClassId" Nullable="false" />
           <Property Type="String" Name="Name" Nullable="false" MaxLength="7" />
+        </ComplexType>
+        <ComplexType Name="StudentsGet_Result">
+          <Property Type="Int32" Name="StudentId" Nullable="false" />
+          <Property Type="String" Name="FirstName" Nullable="false" MaxLength="30" />
+          <Property Type="String" Name="SecondName" Nullable="true" MaxLength="30" />
+          <Property Type="String" Name="Surname" Nullable="false" MaxLength="60" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -125,6 +137,16 @@
               <ComplexTypeMapping TypeName="GradeNet_PRODModel.ClassesGet_ForYear_Result">
                 <ScalarProperty Name="ClassId" ColumnName="ClassId" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="StudentsGet" FunctionName="GradeNet_PRODModel.Store.StudentsGet">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="GradeNet_PRODModel.StudentsGet_Result">
+                <ScalarProperty Name="StudentId" ColumnName="StudentId" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="SecondName" ColumnName="SecondName" />
+                <ScalarProperty Name="Surname" ColumnName="Surname" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

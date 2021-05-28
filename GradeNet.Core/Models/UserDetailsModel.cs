@@ -22,10 +22,7 @@ namespace GradeNet.Core.Models
         public string PostalCode      { get; set; }
         public string PostOfficePlace { get; set; }
 
-        public UserDetailsModel()
-        {
-
-        }
+        public UserDetailsModel() { }
 
         public UserDetailsModel(string firstName, string secondName, string surname, string contactNumer, string pesel, bool isConfirmed, string place,
                                 string prefix, string street, string houseNumber, string apartmentNumber, string postalCode, string postOfficePlace)

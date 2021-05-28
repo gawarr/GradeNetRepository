@@ -13,10 +13,7 @@ namespace GradeNet.Core.Models
         public string Password { get; set; }
         public string Cassword { get; set; }
 
-        public UserModel()
-        {
-
-        }
+        public UserModel() { }
 
         public UserModel(string email, string password)
         {

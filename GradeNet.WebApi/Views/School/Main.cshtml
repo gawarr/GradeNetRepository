@@ -31,13 +31,22 @@
     .col-md-2{
         padding: 0 5px;
     }
+
+    #studentsList {
+        margin: 20px 0;
+        background: #fff4b9;
+        border-radius: 25px;
+    }
+
+    #studentsList li{
+        padding: 10px;
+    }
 </style>
 
 <script>
     function GetClassesSelect() {
         let year = document.getElementById("yearSelect").value;
-        //document.getElementById('selectDiv').innerHTML = '<p>' + year + '</p>';
-        //$('#classesList').append('<p>' + year + '</p>');
+        document.getElementById('studentsList').innerHTML = "";
         $.ajax({
             type: 'POST',
             url: '@Url.Action("HtmlForClassSelectGet")',
@@ -49,8 +58,17 @@
         });
     }
 
-    function GetLessonsSelect() {
-        alert('select lekcji');
+    function GetStudentsList() {
+        let classId = document.getElementById("classSelect").value;
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("HtmlForStudentsListGet")',
+            dataType: 'json',
+            data: { classId: classId },
+            success: function (result) {
+                document.getElementById('studentsList').innerHTML = result.content;
+            }
+        });
     }
 </script>
 
@@ -85,6 +103,11 @@
         </div>
         <div class="col-md-2" id="classesList">
             <div class="selectDiv" id="selectDiv"></div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <div id="studentsList"></div>
         </div>
     </div>
 </div>
