@@ -10,5 +10,6 @@ namespace GradeNet.Infrastructure.Interfaces
     public interface ISchoolManager
     {
         List<int> YearsGet();
+        List<StudentViewModel> StudentsGet(int classId);
     }
 }

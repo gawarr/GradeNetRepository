@@ -108,5 +108,14 @@ namespace GradeNet.Infrastructure
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<ClassesGet_ForYear_Result>("ClassesGet_ForYear", yearParameter);
         }
+    
+        public virtual ObjectResult<StudentsGet_Result> StudentsGet(Nullable<int> classId)
+        {
+            var classIdParameter = classId.HasValue ?
+                new ObjectParameter("ClassId", classId) :
+                new ObjectParameter("ClassId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<StudentsGet_Result>("StudentsGet", classIdParameter);
+        }
     }
 }

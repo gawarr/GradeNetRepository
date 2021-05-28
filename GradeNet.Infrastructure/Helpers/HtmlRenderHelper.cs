@@ -22,15 +22,30 @@ namespace GradeNet.Infrastructure.Helpers
         {
             var classList = _schoolRepository.ClassesGet_ForYear(fromYear);
 
-            string x = "<select onchange='GetLessonsSelect()' class='select' id='classSelect'>";
-            x += $"<option value='0'> </option>";
+            string content = "<select onchange='GetStudentsList()' class='select' id='classSelect'>";
+            content += $"<option value='0'> </option>";
             foreach (var cl in classList)
             {
-                x += $"<option value='{cl.ClassId}'>{cl.Name}</option>";
+                content += $"<option value='{cl.ClassId}'>{cl.Name}</option>";
             }
-            x += "</select>";
+            content += "</select>";
 
-            return x;
+            return content;
+        }
+
+        public string HtmlForStudentsListGet(int classId)
+        {
+            var students = _schoolRepository.StudentsGet(classId);
+
+            string content = "<ol>";
+            foreach (var st in students)
+            {
+                string name = String.IsNullOrEmpty(st.SecondName) ? $"{st.FirstName} {st.Surname}" : $"{st.FirstName} {st.SecondName} {st.Surname}";
+                content += $"<li>{name}</li>";
+            }
+            content += "</ol>";
+
+            return content;
         }
     }
 }
