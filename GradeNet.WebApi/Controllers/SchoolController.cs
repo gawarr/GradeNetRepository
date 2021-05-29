@@ -42,5 +42,13 @@ namespace GradeNet.WebApi.Controllers
             string content = _HtmlRenderHelper.HtmlForStudentsListGet(classId);
             return Json(new { content = content });
         }
+
+        [HttpPost]
+        public JsonResult HtmlForLessonSelectGet(int classId)
+        {
+            string content = _HtmlRenderHelper.HtmlForLessonSelectGet(classId);
+            return Json(new { content = content });
+        }
+        
     }
 }

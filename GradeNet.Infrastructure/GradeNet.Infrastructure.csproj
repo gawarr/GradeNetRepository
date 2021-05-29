@@ -76,6 +76,9 @@
     <Compile Include="Interfaces\IHtmlRenderHelper.cs" />
     <Compile Include="Interfaces\ISchoolManager.cs" />
     <Compile Include="Interfaces\IUserManager.cs" />
+    <Compile Include="LessonsGet_ForClass_Result.cs">
+      <DependentUpon>GradeNetModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Managers\SchoolManager.cs" />
     <Compile Include="Managers\UserManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

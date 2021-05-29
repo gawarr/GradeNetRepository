@@ -21,14 +21,14 @@
 
     .select {
         margin: 10px;
-        width: 50%;
+        width: 70%;
         background: #fff4b911;
         text-align-last: center;
         border-style: none;
         border-bottom: 1px solid black;
     }
 
-    .col-md-2{
+    .col-md-2, .col-md-4{
         padding: 0 5px;
     }
 
@@ -53,7 +53,8 @@
             dataType: 'json',
             data: { year: year },
             success: function (result) {
-                document.getElementById('selectDiv').innerHTML = result.content;
+                document.getElementById('classSelectDiv').innerHTML = result.content;
+                GetLessonsSelect();
             }
         });
     }
@@ -67,6 +68,19 @@
             data: { classId: classId },
             success: function (result) {
                 document.getElementById('studentsList').innerHTML = result.content;
+            }
+        });
+    }
+
+    function GetLessonsSelect() {
+        let classId = document.getElementById("classSelect").value;
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("HtmlForLessonSelectGet")',
+            dataType: 'json',
+            data: { classId: classId },
+            success: function (result) {
+                document.getElementById('lessonSelectDiv').innerHTML = result.content;
             }
         });
     }
@@ -89,6 +103,11 @@
                 Klasa
             </div>
         </div>
+        <div class="col-md-2">
+            <div class="thSelectDiv">
+                Lekcja
+            </div>
+        </div>
     </div>
     <div class="row">
         <div class="col-md-2">
@@ -102,12 +121,18 @@
             </div>
         </div>
         <div class="col-md-2" id="classesList">
-            <div class="selectDiv" id="selectDiv"></div>
+            <div class="selectDiv" id="classSelectDiv"></div>
+        </div>
+        <div class="col-md-2" id="lessonsList">
+            <div class="selectDiv" id="lessonSelectDiv"></div>
         </div>
     </div>
     <div class="row">
         <div class="col-md-4">
             <div id="studentsList"></div>
+        </div>
+        <div class="col-md-2">
+            <div id="studentDetails"></div>
         </div>
     </div>
 </div>

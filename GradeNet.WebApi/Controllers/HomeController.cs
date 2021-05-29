@@ -20,7 +20,7 @@ namespace GradeNet.WebApi.Controllers
 
         public ActionResult Index()
         {
-            return View(new UserViewModel());
+            return View();
         }
 
         [HttpPost]

@@ -71,5 +71,26 @@ namespace GradeNet.Infrastructure.Repositories
                 throw;
             }
         }
+
+        public List<LessonModel> LessonsGet_ForClass(int classId)
+        {
+            try
+            {
+                var list = new List<LessonModel>();
+
+                using (GradeNet_Entities context = new GradeNet_Entities())
+                {
+                    var result = context.LessonsGet_ForClass(classId).ToList();
+                    if (result.Any())
+                        list.AddRange(result.Select(x => new LessonModel(x.LessonId, x.Name)));
+                }
+
+                return list;
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
     }
 }
