@@ -40,7 +40,7 @@ namespace GradeNet.Infrastructure.Helpers
             string content = "<ol>";
             foreach (var st in students)
             {
-                string name = String.IsNullOrEmpty(st.SecondName) ? $"{st.FirstName} {st.Surname}" : $"{st.FirstName} {st.SecondName} {st.Surname}";
+                string name = String.IsNullOrEmpty(st.SecondName) ? $"{st.Surname} {st.FirstName}" : $"{st.Surname} {st.FirstName} {st.SecondName}";
                 content += $"<li>{name}</li>";
             }
             content += "</ol>";
