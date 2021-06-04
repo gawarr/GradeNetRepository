@@ -11,6 +11,9 @@
         <Function Name="LessonsGet_ForClass" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="School">
           <Parameter Name="ClassId" Type="int" Mode="In" />
         </Function>
+        <Function Name="StudentGradesGet_ForLesson" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="School">
+          <Parameter Name="LessonId" Type="int" Mode="In" />
+        </Function>
         <Function Name="StudentsGet" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="School">
           <Parameter Name="ClassId" Type="int" Mode="In" />
         </Function>
@@ -67,7 +70,10 @@
           <Parameter Name="ClassId" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="LessonsGet_ForClass" ReturnType="Collection(GradeNet_PRODModel.LessonsGet_ForClass_Result)">
-            <Parameter Name="ClassId" Mode="In" Type="Int32" />
+          <Parameter Name="ClassId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="StudentGradesGet_ForLesson" ReturnType="Collection(GradeNet_PRODModel.StudentGradesGet_ForLesson_Result)">
+            <Parameter Name="LessonId" Mode="In" Type="Int32" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="UserGet_Result">
@@ -103,6 +109,12 @@
         <ComplexType Name="LessonsGet_ForClass_Result">
           <Property Type="Int32" Name="LessonId" Nullable="false" />
           <Property Type="String" Name="Name" Nullable="false" MaxLength="31" />
+        </ComplexType>
+        <ComplexType Name="StudentGradesGet_ForLesson_Result">
+          <Property Type="Int64" Name="StudentGradeId" Nullable="false" />
+          <Property Type="String" Name="Grade" Nullable="false" MaxLength="3" />
+          <Property Type="String" Name="Style" Nullable="false" MaxLength="255" />
+          <Property Type="Int32" Name="StudentId" Nullable="false" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -165,6 +177,16 @@
               <ComplexTypeMapping TypeName="GradeNet_PRODModel.LessonsGet_ForClass_Result">
                 <ScalarProperty Name="LessonId" ColumnName="LessonId" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="StudentGradesGet_ForLesson" FunctionName="GradeNet_PRODModel.Store.StudentGradesGet_ForLesson">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="GradeNet_PRODModel.StudentGradesGet_ForLesson_Result">
+                <ScalarProperty Name="StudentGradeId" ColumnName="StudentGradeId" />
+                <ScalarProperty Name="Grade" ColumnName="Grade" />
+                <ScalarProperty Name="Style" ColumnName="Style" />
+                <ScalarProperty Name="StudentId" ColumnName="StudentId" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

@@ -32,7 +32,7 @@
         padding: 0 5px;
     }
 
-    #studentsList {
+    #studentsList, #previewsDiv {
         margin: 20px 0;
         background: #fff4b9;
         border-radius: 25px;
@@ -44,7 +44,7 @@
 </style>
 
 <script>
-    function GetClassesSelect() {
+    function GetClassSelect() {
         let year = document.getElementById("yearSelect").value;
         document.getElementById('studentsList').innerHTML = "";
         $.ajax({
@@ -54,7 +54,7 @@
             data: { year: year },
             success: function (result) {
                 document.getElementById('classSelectDiv').innerHTML = result.content;
-                GetLessonsSelect();
+                GetLessonSelect();
             }
         });
     }
@@ -72,7 +72,7 @@
         });
     }
 
-    function GetLessonsSelect() {
+    function GetLessonSelect() {
         let classId = document.getElementById("classSelect").value;
         $.ajax({
             type: 'POST',
@@ -81,6 +81,38 @@
             data: { classId: classId },
             success: function (result) {
                 document.getElementById('lessonSelectDiv').innerHTML = result.content;
+            }
+        });
+    }
+
+    function GetPreviewSelect(lessonIsChosen) {
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("HtmlForPreviewSelectGet")',
+            dataType: 'json',
+            data: { lessonIsChosen: lessonIsChosen },
+            success: function (result) {
+                document.getElementById('previewSelectDiv').innerHTML = result.content;
+            }
+        });
+    }
+
+    function GetPreview() {
+        let classId = document.getElementById("classSelect").value;
+        let lessonId = document.getElementById("lessonSelect").value;
+        let previewType = document.getElementById("previewSelect").value;
+
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("HtmlForPreview")',
+            dataType: 'json',
+            data: {
+                classId: classId,
+                lessonId: lessonId,
+                previewType: previewType
+            },
+            success: function (result) {
+                document.getElementById('previewsDiv').innerHTML = result.content;
             }
         });
     }
@@ -108,11 +140,17 @@
                 Lekcja
             </div>
         </div>
+        <div class="col-md-2">
+            <div class="thSelectDiv">
+                Podgląd
+            </div>
+        </div>
     </div>
+
     <div class="row">
         <div class="col-md-2">
             <div class="selectDiv">
-                <select onchange='GetClassesSelect()' class="select" id="yearSelect">
+                <select onchange='GetClassSelect(); GetPreviewSelect(false);' class="select" id="yearSelect">
                     @foreach (int year in Model)
                     {
                         <option value="@year">@year</option>
@@ -124,19 +162,28 @@
             <div class="selectDiv" id="classSelectDiv"></div>
         </div>
         <div class="col-md-2" id="lessonsList">
-            <div class="selectDiv" id="lessonSelectDiv"></div>
+            <div class="selectDiv" id="lessonSelectDiv">
+                <select class='select'>
+                    <option value='0'> </option>
+                </select>
+            </div>
+        </div>
+        <div class="col-md-2" id="previewsList">
+            <div class="selectDiv" id="previewSelectDiv"></div>
         </div>
     </div>
+
     <div class="row">
         <div class="col-md-4">
             <div id="studentsList"></div>
         </div>
-        <div class="col-md-2">
-            <div id="studentDetails"></div>
+        <div class="col-md-8">
+            <div  id="previewsDiv"></div>
         </div>
     </div>
 </div>
 
 <script>
-    GetClassesSelect();
+    GetClassSelect();
+    GetPreviewSelect(false);
 </script>

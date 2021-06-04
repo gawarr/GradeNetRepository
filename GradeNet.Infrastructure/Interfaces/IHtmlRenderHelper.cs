@@ -11,5 +11,8 @@ namespace GradeNet.Infrastructure.Interfaces
         string HtmlForClassSelectGet(int fromYear);
         string HtmlForStudentsListGet(int classId);
         string HtmlForLessonSelectGet(int classId);
+        string HtmlForPreviewSelectGet(bool lessonIsChosen);
+        string HtmlForPreviewGet(int classId, int lessonId, int previewType);
+        string GradePreviewGet(int classId, int lessonId);
     }
 }

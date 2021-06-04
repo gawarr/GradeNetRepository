@@ -1,4 +1,5 @@
-﻿using GradeNet.Core.Interfaces;
+﻿using GradeNet.Core.Enums;
+using GradeNet.Core.Interfaces;
 using GradeNet.Infrastructure.Interfaces;
 using GradeNet.Infrastructure.Repositories;
 using System;
@@ -22,7 +23,7 @@ namespace GradeNet.Infrastructure.Helpers
         {
             var classList = _schoolRepository.ClassesGet_ForYear(fromYear);
 
-            string content = "<select onchange='GetStudentsList(); GetLessonsSelect();' class='select' id='classSelect'>";
+            string content = "<select onchange='GetStudentsList(); GetLessonSelect(); GetPreviewSelect(false);' class='select' id='classSelect'>";
             content += $"<option value='0'> </option>";
             foreach (var cl in classList)
             {
@@ -52,7 +53,7 @@ namespace GradeNet.Infrastructure.Helpers
         {
             var lessonsList = _schoolRepository.LessonsGet_ForClass(classId);
 
-            string content = "<select onchange='alert(`zmiana lecki`)' class='select' id='lessonSelect'>";
+            string content = "<select onchange='GetPreviewSelect(true);' class='select' id='lessonSelect'>";
             content += $"<option value='0'> </option>";
             foreach (var ls in lessonsList)
             {
@@ -61,6 +62,68 @@ namespace GradeNet.Infrastructure.Helpers
             content += "</select>";
 
             return content;
+        }
+
+        public string HtmlForPreviewSelectGet(bool lessonIsChosen)
+        {
+            if (!lessonIsChosen)
+            {
+                PreviewEnum[] previewList = { (PreviewEnum)4, (PreviewEnum)5 };
+
+                string content = "<select onchange='GetPreview();' class='select' id='previewSelect'>" +
+                                "   <option value='0'> </option>" +
+                                $"   <option value='4'>{(PreviewEnum)4}</option>" +
+                                $"   <option value='5'>{(PreviewEnum)5}</option>" +
+                                "</select>";
+                return content;
+            }
+            else
+            {
+                PreviewEnum[] previewList = { (PreviewEnum)1, (PreviewEnum)2, (PreviewEnum)3, (PreviewEnum)4, (PreviewEnum)5 };
+
+                string content = "<select onchange='GetPreview();' class='select' id='previewSelect'>";
+                content += $"<option value='0'> </option>";
+                for (int i = 1; i <= previewList.Length; i++)
+                {
+                    content += $"<option value='{i}'>{previewList[i - 1]}</option>";
+                }
+                content += "</select>";
+
+                return content;
+            }
+        }
+
+        public string HtmlForPreviewGet(int classId, int lessonId, int previewType)
+        {
+            string context = "<div class='row'>";
+
+            switch ((PreviewEnum)previewType)
+            {
+                case PreviewEnum.Oceny:
+                    context += GradePreviewGet(classId, lessonId);
+                        break;
+            }
+
+            context += "</div>";
+
+            return context;
+        }
+
+        public string GradePreviewGet(int classId, int lessonId)
+        {
+            string context = "<div class='col-md-1'>" +
+                             "<ul>";
+
+            var students = _schoolRepository.StudentsGet(classId);
+            foreach(var sttudent in students)
+            {
+                context += $"<li><button type='button' onclick='alert(`klik + {sttudent.StudentId}`)'>Szczegóły</button>    </li>";
+            }
+
+            context += "</ul>" +
+                       "</div>";
+
+            return context;
         }
     }
 }

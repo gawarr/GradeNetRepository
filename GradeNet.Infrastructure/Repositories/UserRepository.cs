@@ -44,7 +44,8 @@ namespace GradeNet.Infrastructure.Repositories
             }
             catch (Exception ex)
             {
-                throw;
+                //throw;
+                return false;
             }
         }
 

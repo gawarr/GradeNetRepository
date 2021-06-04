@@ -49,6 +49,20 @@ namespace GradeNet.WebApi.Controllers
             string content = _HtmlRenderHelper.HtmlForLessonSelectGet(classId);
             return Json(new { content = content });
         }
-        
+
+        [HttpPost]
+        public JsonResult HtmlForPreviewSelectGet(bool lessonIsChosen)
+        {
+            string content = _HtmlRenderHelper.HtmlForPreviewSelectGet(lessonIsChosen);
+            return Json(new { content = content });
+        }
+
+        [HttpPost]
+        public JsonResult HtmlForPreview(int classId, int lessonId, int previewType)
+        {
+            string content = _HtmlRenderHelper.HtmlForPreviewGet(classId, lessonId, previewType);
+            return Json(new { content = content });
+        }
+
     }
 }

@@ -84,6 +84,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\SchoolRepository.cs" />
     <Compile Include="Repositories\UserRepository.cs" />
+    <Compile Include="StudentGradesGet_ForLesson_Result.cs">
+      <DependentUpon>GradeNetModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="StudentsGet_Result.cs">
       <DependentUpon>GradeNetModel.tt</DependentUpon>
     </Compile>
