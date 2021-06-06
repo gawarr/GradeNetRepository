@@ -1,0 +1,29 @@
+﻿@model GradeNet.Infrastructure.ViewModels.LessonViewModel
+
+@{ string name = String.IsNullOrEmpty(Model.TeacherDetails.SecondName) ? $"{Model.TeacherDetails.FirstName} {Model.TeacherDetails.Surname}" : $"{Model.TeacherDetails.FirstName} {Model.TeacherDetails.SecondName} {Model.TeacherDetails.Surname}"; }
+
+<div class="container" style="padding: 0;">
+    <div class="row">
+        <div class="col-md-2">
+            @Html.Partial("~/Views/Teacher/_LeftSidePanel_Lesson.cshtml", Model.LessonId)
+        </div>
+        <div class="col-md-10 content">
+            <h3>Klasa @Model.ClassName - @Model.LessonName</h3>
+            <hr>
+            <h4>Wychowawca</h4>
+            <p>@name</p>
+            <br />
+            <div class="row" style="margin-bottom:10px;">
+                <div class="col-md-4">
+                    @Html.Partial("~/Views/Teacher/_StudentsList.cshtml", Model.StudentsList)
+                </div>
+                @if (Model.PreviewTypeId == 1)
+                {
+                    <div class="col-md-4">
+                        @Html.Partial("~/Views/Teacher/_StudentsGradesList.cshtml", Model.StudentsGradesList)
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>

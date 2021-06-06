@@ -55,6 +55,9 @@
     <Compile Include="ClassesGet_ForYear_Result.cs">
       <DependentUpon>GradeNetModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="ClassGet_Result.cs">
+      <DependentUpon>GradeNetModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="GradeNetModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -74,14 +77,20 @@
     <Compile Include="Helpers\UserHelper.cs" />
     <Compile Include="Helpers\UsersRoleProvider.cs" />
     <Compile Include="Interfaces\IHtmlRenderHelper.cs" />
+    <Compile Include="Interfaces\ITeacherManager.cs" />
     <Compile Include="Interfaces\ISchoolManager.cs" />
     <Compile Include="Interfaces\IUserManager.cs" />
+    <Compile Include="LessonGet_Result.cs">
+      <DependentUpon>GradeNetModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="LessonsGet_ForClass_Result.cs">
       <DependentUpon>GradeNetModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Managers\TeacherManager.cs" />
     <Compile Include="Managers\SchoolManager.cs" />
     <Compile Include="Managers\UserManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositories\TeacherRepository.cs" />
     <Compile Include="Repositories\SchoolRepository.cs" />
     <Compile Include="Repositories\UserRepository.cs" />
     <Compile Include="StudentGradesGet_ForLesson_Result.cs">
@@ -96,7 +105,10 @@
     <Compile Include="UserGet_Result.cs">
       <DependentUpon>GradeNetModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="ViewModels\GradeViewModel.cs" />
+    <Compile Include="ViewModels\LessonViewModel.cs" />
     <Compile Include="ViewModels\ClassViewModel.cs" />
+    <Compile Include="ViewModels\FindClassViewModel.cs" />
     <Compile Include="ViewModels\StudentViewModel.cs" />
     <Compile Include="ViewModels\UserDetailsViewModel.cs" />
     <Compile Include="ViewModels\UserViewModel.cs" />

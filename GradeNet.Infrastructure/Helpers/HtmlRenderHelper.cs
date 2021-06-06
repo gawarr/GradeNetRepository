@@ -57,7 +57,7 @@ namespace GradeNet.Infrastructure.Helpers
             content += $"<option value='0'> </option>";
             foreach (var ls in lessonsList)
             {
-                content += $"<option value='{ls.LessonId}'>{ls.Name}</option>";
+                content += $"<option value='{ls.LessonId}'>{ls.LessonName}</option>";
             }
             content += "</select>";
 

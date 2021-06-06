@@ -1,0 +1,98 @@
+﻿@model List<int>
+
+<style>
+    .content {
+        border: 1px solid #aaa;
+        padding: 15px;
+    }
+
+    hr {
+        width: 95%;
+    }
+
+    .select {
+        width: 100%;
+        background: #fff4b911;
+        border-style: none;
+        border-bottom: 1px solid black;
+    }
+</style>
+
+<div class="container" style="padding: 20px 20%;">
+    <div class="row">
+        <div class="col-md-12 content">
+            <h4>Wybór klasy:</h4>
+            <hr>
+            <div class="row" style="margin-bottom:10px;">
+                <div class="col-md-1">
+                    Rok:
+                </div>
+                <div class="col-md-3">
+                    <select class="select" id="yearSelect" onchange='GetClassSelect();'>
+                        @foreach (int year in Model)
+                        {
+                            <option value="@year">@year - @(year+1)</option>
+                        }
+                    </select>
+                </div>
+            </div>
+            <form action="class" method="post">
+                <div class="row" style="margin-bottom:10px;">
+                    <div class="col-md-1">
+                        Klasa:
+                    </div>
+                    <div class="col-md-3" id="classSelectDiv">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <input type="submit" value="Przejdź" />
+                        @*<a href="#" onclick="GoToClass()" class="btn btn-primary">Przejdź</a>*@
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    GetClassSelect();
+
+    function GetClassSelect() {
+        let year = document.getElementById("yearSelect").value;
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("GetHtmlForClassSelect")',
+            dataType: 'json',
+            data: { year: year },
+            success: function (result) {
+                document.getElementById('classSelectDiv').innerHTML = result.html;
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                console.log(xhr.status);
+                console.log(thrownError);
+                console.log(xhr.responseText);
+            }
+        });
+    }
+
+    function GoToClass() {
+        year = document.getElementById("yearSelect").value;
+        classId = document.getElementById("classSelect").value;
+
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("Class")',
+            data: { classId: classId },
+            success: function (result) {
+                window.location.href = result;
+                console.log(result)
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                console.log(xhr.status);
+                console.log(thrownError);
+                console.log(xhr.responseText);
+            }
+        });
+    }
+</script>

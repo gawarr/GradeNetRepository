@@ -10,6 +10,8 @@ namespace GradeNet.Core.Models
     {
         public int ClassId { get; set; }
         public string Name { get; set; }
+        public int TeacherId { get; set; }
+        public UserDetailsModel TeacherDetails { get; set; }
 
         public ClassModel() { }
 
@@ -17,6 +19,14 @@ namespace GradeNet.Core.Models
         {
             ClassId = classId;
             Name = name;
+        }
+
+        public ClassModel(int classId, string name, int teacherId, UserDetailsModel teacherDetails)
+        {
+            ClassId = classId;
+            Name = name;
+            TeacherId = teacherId;
+            TeacherDetails = teacherDetails;
         }
     }
 }

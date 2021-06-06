@@ -140,6 +140,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\UnityConfig.cs" />
+    <Compile Include="Controllers\TeacherController.cs" />
     <Compile Include="Controllers\SchoolController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -186,11 +187,24 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Home\_Login.cshtml" />
-    <Content Include="Views\Home\_Menu.cshtml" />
     <Content Include="Views\Shared\_TopNavbar.cshtml" />
     <Content Include="Views\User\UserProfile.cshtml" />
     <Content Include="Views\School\Main.cshtml" />
     <Content Include="Views\School\xx.cshtml" />
+    <Content Include="Views\Parent\Menu.cshtml" />
+    <Content Include="Views\Student\Menu.cshtml" />
+    <Content Include="Views\Teacher\Menu.cshtml" />
+    <Content Include="Views\Admin\Menu.cshtml" />
+    <Content Include="Views\Teacher\FindClass.cshtml" />
+    <Content Include="Views\Shared\GenView.cshtml" />
+    <Content Include="Views\Teacher\_StudentsList.cshtml" />
+    <Content Include="Views\Teacher\TeacherView.cshtml" />
+    <Content Include="Views\Teacher\Class.cshtml" />
+    <Content Include="Views\Teacher\_LeftSidePanel_Class.cshtml" />
+    <Content Include="Views\Teacher\SelectLesson.cshtml" />
+    <Content Include="Views\Teacher\Lesson.cshtml" />
+    <Content Include="Views\Teacher\_LeftSidePanel_Lesson.cshtml" />
+    <Content Include="Views\Teacher\_StudentsGradesList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

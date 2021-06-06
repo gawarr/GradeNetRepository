@@ -64,5 +64,11 @@ namespace GradeNet.WebApi.Controllers
             return Json(new { content = content });
         }
 
+        public ActionResult xx()
+        {
+            var years = _schoolManager.YearsGet();
+
+            return View(years);
+        }
     }
 }

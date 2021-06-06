@@ -4,27 +4,29 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GradeNet.Core.Models
+namespace GradeNet.Infrastructure.ViewModels
 {
-    public class LessonModel
+    public class LessonViewModel
     {
         public int LessonId { get; set; }
         public string LessonName { get; set; }
         public int ClassId { get; set; }
         public string ClassName { get; set; }
         public int TeacherId { get; set; }
-        public UserDetailsModel TeacherDetails { get; set; }
+        public int PreviewTypeId { get; set; }
+        public UserDetailsViewModel TeacherDetails { get; set; }
+        public List<StudentViewModel> StudentsList { get; set; }
+        public List<GradeViewModel> StudentsGradesList { get; set; }
 
+        public LessonViewModel() { }
 
-        public LessonModel() { }
-
-        public LessonModel(int lessonId, string lessonName)
+        public LessonViewModel(int lessonId, string lessonName)
         {
             LessonId = lessonId;
             LessonName = lessonName;
         }
 
-        public LessonModel(int lessonId, string lessonName, int classId, string className, int teacherId, UserDetailsModel teacherDetails)
+        public LessonViewModel(int lessonId, string lessonName, int classId, string className, int teacherId, UserDetailsViewModel teacherDetails)
         {
             LessonId = lessonId;
             LessonName = lessonName;

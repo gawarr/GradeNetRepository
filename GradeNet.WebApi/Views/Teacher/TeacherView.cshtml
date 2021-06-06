@@ -1,0 +1,48 @@
+﻿<style>
+    .content {
+        border: 1px solid #aaa;
+        padding: 15px;
+    }
+
+    #leftSidePanel {
+        background: #dddddd;
+        font-size: 150%;
+    }
+
+    ul li {
+        list-style-type: none;
+    }
+
+</style>
+
+<div class="row">
+    <div class="col-md-3" style="padding: 0;">
+        <div id="leftSidePanel">
+            @Html.Partial("~/Views/Teacher/Menu.cshtml")
+        </div>
+    </div>
+    <div class="col-md-9" style="padding: 0;" id="placeHolderDiv">
+
+    </div>
+</div>
+
+<script>
+    let year;
+    let classId;
+
+    function FindClass() {
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("FindClass", "Teacher")',
+            success: function (result) {
+                $('#placeHolderDiv').html(result);
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                console.log(xhr.status);
+                console.log(thrownError);
+                console.log(xhr.responseText);
+            }
+        });
+    }
+
+</script>

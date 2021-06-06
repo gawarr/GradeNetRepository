@@ -1,0 +1,10 @@
+﻿@model List<GradeNet.Infrastructure.ViewModels.StudentViewModel>
+
+<h4>Lista uczniów</h4>
+<ol>
+    @foreach(var student in Model)
+    {
+        string name = String.IsNullOrEmpty(student.SecondName) ? $"{student.Surname} {student.FirstName}" : $"{student.Surname} {student.FirstName} {student.SecondName}";
+        <li>@name</li>;
+    }
+</ol>

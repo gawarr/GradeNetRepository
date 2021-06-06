@@ -1,13 +1,13 @@
 ﻿@model GradeNet.Infrastructure.ViewModels.UserViewModel
 @{
     ViewBag.Title = "GradeNet";
-}
 
-@if (!User.Identity.IsAuthenticated)
- {
-     Html.RenderPartial("_Login", Model);
- }
- else
- {
-     Html.RenderPartial("_Menu");
- } 
+    if (!User.Identity.IsAuthenticated)
+    {
+        Html.RenderPartial("_Login", Model);
+    }
+    else
+    {
+        <h1 style="text-align: center;">GradeNet</h1>
+    }
+} 

@@ -41,9 +41,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Enums\UserTypeEnum.cs" />
     <Compile Include="Enums\PreviewEnum.cs" />
+    <Compile Include="Interfaces\ITeacherRepository.cs" />
     <Compile Include="Interfaces\ISchoolRepository.cs" />
     <Compile Include="Interfaces\IUserRepository.cs" />
+    <Compile Include="Models\GradeModel.cs" />
     <Compile Include="Models\LessonModel.cs" />
     <Compile Include="Models\ClassModel.cs" />
     <Compile Include="Models\StudentModel.cs" />

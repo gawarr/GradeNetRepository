@@ -1,0 +1,21 @@
+﻿@model List<GradeNet.Infrastructure.ViewModels.GradeViewModel>
+
+@{ 
+    var studentsIdList = new List<int>();
+    studentsIdList.AddRange(Model.Select(x => x.StudentId));
+    //list.AddRange(result.Select(x => new GradeModel(x.StudentGradeId, x.Grade, x.Style, x.StudentId)));
+}
+
+<h4>Oceny</h4>
+<ol>
+    @foreach (var nr in studentsIdList.Distinct())
+    {
+        string line = String.Empty;
+        foreach(var grade in Model.Where(x => x.StudentId == nr))
+        {
+
+            line += $", {grade.Grade}";
+        }
+        <li>@line.Substring(2)</li>;
+    }
+</ol>

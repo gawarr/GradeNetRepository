@@ -1,0 +1,16 @@
+﻿@if (User.IsInRole("user_administration"))
+{
+    Html.RenderPartial("~/Views/Admin/Menu.cshtml");
+}
+else if (User.IsInRole("teacher"))
+{
+    Html.RenderPartial("~/Views/Teacher/TeacherView.cshtml");
+}
+else if(User.IsInRole("parent"))
+{
+    Html.RenderPartial("~/Views/Parent/Menu.cshtml");
+}
+else if (User.IsInRole("student"))
+{
+    Html.RenderPartial("~/Views/Student/Menu.cshtml");
+}

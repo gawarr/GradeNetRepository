@@ -36,9 +36,13 @@ namespace GradeNet.Infrastructure.ViewModels
         public string PostOfficePlace { get; set; }
         public List<int> RelationsId { get; set; }
 
-        public UserDetailsViewModel()
-        {
+        public UserDetailsViewModel() { }
 
+        public UserDetailsViewModel(string firstName, string secondName, string surname)
+        {
+            FirstName = firstName;
+            SecondName = secondName;
+            Surname = surname;
         }
 
         public UserDetailsViewModel(string firstName, string secondName, string surname, string contactNumber, bool isConfirmed, string pesel, string place,

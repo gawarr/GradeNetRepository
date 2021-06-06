@@ -1,11 +1,16 @@
-﻿    <div class="container" style="background-color: #ffdd00; height: 40px; line-height: 40px; text-align: center; margin-bottom: 1%;">
+﻿    <div class="container" style="background-color: #ffdd00; height: 60px; text-align: center;">
         <div class="row">
             <div class="col-md-2">
-                @Html.ActionLink("Strona główna", "Index", "Home")
+                <a href="@Url.Action("Index", "Home")" style="text-decoration: none;"><h3>GradeNet</h3></a>
             </div>
-            <div class="col-md-9"></div>
-            <div class="col-md-1">
-                @Html.ActionLink("Wyloguj", "LogOut", "Home")
+            @if (User.IsInRole("Teacher"))
+            {
+                <div class="col-md-2">
+                    <a href="@Url.Action("FindClass", "Teacher")" style="text-decoration: none;"><h3>Klasy</h3></a>
+                </div>
+            }
+            <div class="col-md-2">
+                <a href="@Url.Action("LogOut", "Home")" style="text-decoration: none;"><h3>Wyloguj</h3></a>
             </div>
         </div>
     </div>
