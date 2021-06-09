@@ -2,8 +2,15 @@
 
 @{ string name = String.IsNullOrEmpty(Model.TeacherDetails.SecondName) ? $"{Model.TeacherDetails.FirstName} {Model.TeacherDetails.Surname}" : $"{Model.TeacherDetails.FirstName} {Model.TeacherDetails.SecondName} {Model.TeacherDetails.Surname}"; }
 
-<div class="container" style="padding: 0;">
-    <div class="row">
+<style>
+    .content {
+        border: 1px solid #aaa;
+        padding: 15px;
+        margin-top: 15px;
+    }
+</style>
+
+    <div class="row" style="padding: 0 15px 0 0;">
         <div class="col-md-2">
             @Html.Partial("~/Views/Teacher/_LeftSidePanel_Class.cshtml", Model.ClassId)
         </div>
@@ -20,4 +27,3 @@
             </div>
         </div>
     </div>
-</div>

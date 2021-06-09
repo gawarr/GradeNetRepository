@@ -209,6 +209,8 @@
     <Content Include="Views\Teacher\AddGrade.cshtml" />
     <Content Include="Views\Teacher\SelectStudentFromClass.cshtml" />
     <Content Include="Views\Teacher\StudentsComments.cshtml" />
+    <Content Include="Views\Teacher\ClassEvents.cshtml" />
+    <Content Include="Views\Teacher\_EventsList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -46,6 +46,7 @@
     <Compile Include="Interfaces\ITeacherRepository.cs" />
     <Compile Include="Interfaces\ISchoolRepository.cs" />
     <Compile Include="Interfaces\IUserRepository.cs" />
+    <Compile Include="Models\EventModel.cs" />
     <Compile Include="Models\GradeModel.cs" />
     <Compile Include="Models\LessonModel.cs" />
     <Compile Include="Models\ClassModel.cs" />

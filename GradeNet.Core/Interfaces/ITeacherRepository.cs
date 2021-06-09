@@ -18,5 +18,6 @@ namespace GradeNet.Core.Interfaces
         List<GradeModel> StudentsGradesGet_ForLesson(int lessonId);
         List<SubjectModel> SubjectsGet(int lessonId);
         List<CommentsModel> StudentsCommentsGet(int studentId);
+        List<EventModel> EventsGet_ForClass(int classId);
     }
 }

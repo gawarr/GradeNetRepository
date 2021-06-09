@@ -1,11 +1,15 @@
 ﻿@model GradeNet.Infrastructure.ViewModels.AddGradeViewModel
 
-@{ string name = String.IsNullOrEmpty(Model.Student.SecondName) ? $"{Model.Student.FirstName} {Model.Student.Surname}" : $"{Model.Student.FirstName} {Model.Student.SecondName} {Model.Student.Surname}"; }
+@{ 
+    int[] x = { Model.ClassId, Model.LessonId };
+    string name = String.IsNullOrEmpty(Model.Student.SecondName) ? $"{Model.Student.FirstName} {Model.Student.Surname}" : $"{Model.Student.FirstName} {Model.Student.SecondName} {Model.Student.Surname}"; 
+}
 
 <style>
     .content {
         border: 1px solid #aaa;
-        padding: 15px;
+        padding-bottom: 15px;
+        margin-top: 15px;
     }
 
     hr {
@@ -20,59 +24,60 @@
     }
 </style>
 
-<div class="container" style="padding: 20px 20%;">
-    <div class="row">
-        <div class="col-md-12 content">
-            <h4>Dodaj ocenę:</h4>
-            <hr>
-            <form action="AddGrade" method="post">
-                <div class="row" style="margin-bottom:10px;">
-                    <div class="col-md-2">
-                        Uczeń:
-                    </div>
-                    <div class="col-md-4">
-                        @name
-                        <input type="hidden" name="studentId" value="@Model.Student.StudentId" />
-                    </div>
+<div class="row" style="padding: 0 15px 0 0;">
+    <div class="col-md-2">
+        @Html.Partial("~/Views/Teacher/_LeftSidePanel_Lesson.cshtml", new List<int>(x))
+    </div>
+    <div class="col-md-10 content">
+        <h4>Dodaj ocenę:</h4>
+        <hr>
+        <form action="AddGrade" method="post">
+            <div class="row" style="margin-bottom:10px;">
+                <div class="col-md-2">
+                    Uczeń:
                 </div>
-                <div class="row" style="margin-bottom:10px;">
-                    <div class="col-md-2">
-                        Przedmiot:
-                    </div>
-                    <div class="col-md-4">
-                        @Model.LessonName
-                        <input type="hidden" name="lessonId" value="@Model.LessonId" />
-                    </div>
+                <div class="col-md-4">
+                    @name
+                    <input type="hidden" name="studentId" value="@Model.Student.StudentId" />
                 </div>
-                <div class="row" style="margin-bottom:10px;">
-                    <div class="col-md-2">
-                        Ocena:
-                    </div>
-                    <div class="col-md-4">
-                        <input type="text" name="grade" size="1" maxlength="2" />
-                        <input type="hidden" name="style" value="1" />
-                    </div>
+            </div>
+            <div class="row" style="margin-bottom:10px;">
+                <div class="col-md-2">
+                    Przedmiot:
                 </div>
-                <div class="row" style="margin-bottom:10px;">
-                    <div class="col-md-2">
-                        Semestr:
-                    </div>
-                    <div class="col-md-4">
-                        <input type="text" name="semester" size="1" maxlength="1" />
-                    </div>
+                <div class="col-md-4">
+                    @Model.LessonName
+                    <input type="hidden" name="lessonId" value="@Model.LessonId" />
                 </div>
-                <div class="row">
-                    <div class="col-md-2">
-                        <input type="submit" value="Dodaj" />
-                    </div>
-                    <div class="col-md-6">
-                        @if (ViewBag.Error != "")
-                        {
-                            <h4 style="color: #a00000">@ViewBag.Error</h4>
-                        }
-                    </div>
+            </div>
+            <div class="row" style="margin-bottom:10px;">
+                <div class="col-md-2">
+                    Ocena:
                 </div>
-            </form>
-        </div>
+                <div class="col-md-4">
+                    <input type="text" name="grade" size="1" maxlength="2" />
+                    <input type="hidden" name="style" value="1" />
+                </div>
+            </div>
+            <div class="row" style="margin-bottom:10px;">
+                <div class="col-md-2">
+                    Semestr:
+                </div>
+                <div class="col-md-4">
+                    <input type="text" name="semester" size="1" maxlength="1" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-2">
+                    <input type="submit" value="Dodaj" />
+                </div>
+                <div class="col-md-6">
+                    @if (ViewBag.Error != "")
+                    {
+                        <h4 style="color: #a00000">@ViewBag.Error</h4>
+                    }
+                </div>
+            </div>
+        </form>
     </div>
 </div>

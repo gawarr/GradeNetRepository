@@ -1,13 +1,10 @@
 ﻿@model List<GradeNet.Infrastructure.ViewModels.LessonViewModel>
 
-@{
-    int[] x = { Model[0].ClassId };
-}
-
 <style>
     .content {
         border: 1px solid #aaa;
         padding: 15px;
+        margin-top: 15px;
     }
 
     hr {
@@ -22,34 +19,32 @@
     }
 </style>
 
-<div class="container" style="padding: 0;">
-    <div class="row">
-        <div class="col-md-2">
-            @Html.Partial("~/Views/Teacher/_LeftSidePanel_Lesson.cshtml", new List<int>(x))
-        </div>
-        <div class="col-md-6 content" style="margin-top: 20px">
-            <h4>Wybór lekcji</h4>
-            <hr>
-            <form action="Lesson" method="get">
-                <div class="row" style="margin-bottom:10px;">
-                    <div class="col-md-1">
-                        Lekcja:
-                    </div>
-                    <div class="col-md-3">
-                        <select class="select" name="lessonId">
-                            @foreach (var ls in Model)
-                            {
-                                <option value="@ls.LessonId">@ls.LessonName</option>
-                            }
-                        </select>
-                    </div>
+<div class="row" style="padding: 0 15px 0 0;">
+    <div class="col-md-2">
+        @Html.Partial("~/Views/Teacher/_LeftSidePanel_Class.cshtml", Model[0].ClassId)
+    </div>
+    <div class="col-md-10 content">
+        <h4>Wybór lekcji</h4>
+        <hr>
+        <form action="Lesson" method="get">
+            <div class="row" style="margin-bottom:10px;">
+                <div class="col-md-1">
+                    Lekcja:
                 </div>
-                <div class="row">
-                    <div class="col-md-12">
-                        <input type="submit" value="Przejdź" />
-                    </div>
+                <div class="col-md-3">
+                    <select class="select" name="lessonId">
+                        @foreach (var ls in Model)
+                        {
+                            <option value="@ls.LessonId">@ls.LessonName</option>
+                        }
+                    </select>
                 </div>
-            </form>
-        </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <input type="submit" value="Przejdź" />
+                </div>
+            </div>
+        </form>
     </div>
 </div>

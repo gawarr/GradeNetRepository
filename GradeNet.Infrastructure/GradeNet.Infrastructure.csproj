@@ -58,6 +58,9 @@
     <Compile Include="ClassGet_Result.cs">
       <DependentUpon>GradeNetModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="EventsGet_ForClass_Result.cs">
+      <DependentUpon>GradeNetModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="GradeNetModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -112,6 +115,8 @@
       <DependentUpon>GradeNetModel.tt</DependentUpon>
     </Compile>
     <Compile Include="ViewModels\AddGradeViewModel.cs" />
+    <Compile Include="ViewModels\EventViewModel.cs" />
+    <Compile Include="ViewModels\ClassEventsViewModel.cs" />
     <Compile Include="ViewModels\StudentsCommentsViewModel.cs" />
     <Compile Include="ViewModels\GradeViewModel.cs" />
     <Compile Include="ViewModels\CommentsViewModel.cs" />

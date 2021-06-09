@@ -197,5 +197,26 @@ namespace GradeNet.Infrastructure.Repositories
                 return new List<CommentsModel>();
             }
         }
+
+        public List<EventModel> EventsGet_ForClass(int classId)
+        {
+            try
+            {
+                var list = new List<EventModel>();
+
+                using (GradeNet_Entities context = new GradeNet_Entities())
+                {
+                    var result = context.EventsGet_ForClass(classId).ToList();
+                    if (result.Any())
+                        list.AddRange(result.Select(x => new EventModel(x.EventId, x.EventType, x.Shortcut, x.EventDate, x.Description)));
+                }
+
+                return list;
+            }
+            catch (Exception ex)
+            {
+                return new List<EventModel>();
+            }
+        }
     }
 }

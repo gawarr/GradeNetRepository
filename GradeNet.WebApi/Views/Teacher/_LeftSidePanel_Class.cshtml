@@ -8,13 +8,23 @@
 
 <div style="background-color: #ffdd00; text-align: center;">
     <div class="row">
+            <div class="col-md-12">
+                <a href="@Url.Action("Class", "Teacher", new { classId = Model })"><h3>Do klasy</h3></a>
+            </div>
+        </div>
+    <div class="row">
         <div class="col-md-12">
-            <a href="@Url.Action("SelectLesson", "Teacher", new { classId = Model})"><h3>Lekcje</h3></a>
+            <a href="@Url.Action("SelectLesson", "Teacher", new { classId = Model })"><h3>Lekcje</h3></a>
         </div>
     </div>
     <div class="row">
         <div class="col-md-12">
-            <a href="@Url.Action("SelectStudentFromClass", "Teacher", new { classId = Model})"><h3>Uwagi</h3></a>
+            <a href="@Url.Action("SelectStudentFromClass", "Teacher", new { classId = Model })"><h3>Uwagi</h3></a>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <a href="@Url.Action("ClassEvents", "Teacher", new { classId = Model })"><h3>Wydarzenia</h3></a>
         </div>
     </div>
 </div>

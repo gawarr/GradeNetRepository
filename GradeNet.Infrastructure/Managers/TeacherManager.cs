@@ -122,5 +122,16 @@ namespace GradeNet.Infrastructure.Managers
 
             return commentsList;
         }
+
+        public List<EventViewModel> EventsGet_ForClass(int classId)
+        {
+            var eventsList = new List<EventViewModel>();
+
+            var list = _teacherRepository.EventsGet_ForClass(classId);
+            if (list.Any())
+                eventsList.AddRange(list.Select(x => new EventViewModel(x.EventId, x.EventType, x.Shortcut, x.EventDate, x.Description)));
+
+            return eventsList;
+        }
     }
 }

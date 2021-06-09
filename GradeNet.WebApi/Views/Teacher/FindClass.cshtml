@@ -4,6 +4,7 @@
     .content {
         border: 1px solid #aaa;
         padding: 15px;
+        margin-top: 15px;
     }
 
     hr {
@@ -18,43 +19,41 @@
     }
 </style>
 
-<div class="container" style="padding-top: 20px;">
-    <div class="row">
-        <div class="col-md-2"></div>
-        <div class="col-md-10 content">
-            <h4>Wybór klasy:</h4>
-            <hr>
+<div class="row" style="padding: 0 15px 0 0;">
+    <div class="col-md-2"></div>
+    <div class="col-md-10 content">
+        <h4>Wybór klasy:</h4>
+        <hr>
+        <div class="row" style="margin-bottom:10px;">
+            <div class="col-md-1">
+                Rok:
+            </div>
+            <div class="col-md-3">
+                <select class="select" id="yearSelect" onchange='GetClassSelect();'>
+                    @foreach (int year in Model)
+                    {
+                        <option value="@year">@year - @(year+1)</option>
+                    }
+                </select>
+            </div>
+        </div>
+        <form action="Class" method="get">
             <div class="row" style="margin-bottom:10px;">
                 <div class="col-md-1">
-                    Rok:
+                    Klasa:
                 </div>
-                <div class="col-md-3">
-                    <select class="select" id="yearSelect" onchange='GetClassSelect();'>
-                        @foreach (int year in Model)
-                        {
-                            <option value="@year">@year - @(year+1)</option>
-                        }
-                    </select>
+                <div class="col-md-3" id="classSelectDiv">
                 </div>
             </div>
-            <form action="Class" method="get">
-                <div class="row" style="margin-bottom:10px;">
-                    <div class="col-md-1">
-                        Klasa:
-                    </div>
-                    <div class="col-md-3" id="classSelectDiv">
-                    </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <input type="submit" value="Przejdź" />
+                    @*<a href="#" onclick="GoToClass()" class="btn btn-primary">Przejdź</a>*@
                 </div>
-                <div class="row">
-                    <div class="col-md-12">
-                        <input type="submit" value="Przejdź" />
-                        @*<a href="#" onclick="GoToClass()" class="btn btn-primary">Przejdź</a>*@
-                    </div>
-                </div>
-            </form>
-        </div>
+            </div>
+        </form>
     </div>
-    </div>
+</div>
 
 <script>
     GetClassSelect();

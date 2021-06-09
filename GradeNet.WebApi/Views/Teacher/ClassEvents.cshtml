@@ -1,0 +1,35 @@
+﻿@model GradeNet.Infrastructure.ViewModels.ClassEventsViewModel
+
+<style>
+    .content {
+        border: 1px solid #aaa;
+        padding-bottom: 15px;
+        margin-top: 15px;
+    }
+
+    table {
+        border-collapse: collapse;
+    }
+
+    table, td, th {
+        border: 1px solid black;
+    }
+    td, th {
+        padding: 3px 10px;
+    }
+</style>
+
+<div class="row" style="padding: 0 15px 0 0;">
+    <div class="col-md-2">
+        @Html.Partial("~/Views/Teacher/_LeftSidePanel_Class.cshtml", Model.Class.ClassId)
+    </div>
+    <div class="col-md-10 content">
+        <h3>Klasa @Model.Class.Name</h3>
+        <hr>
+        <div class="row" style="margin-bottom:10px;">
+            <div class="col-md-10">
+                @Html.Partial("~/Views/Teacher/_EventsList.cshtml", Model.EventsList)
+            </div>
+        </div>
+    </div>
+</div>

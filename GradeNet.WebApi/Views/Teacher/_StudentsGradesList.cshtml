@@ -45,19 +45,20 @@
             <td style="text-align: center;">
                 @student.StudentId.ToString().
             </td>
-            <td width="24%">
+            <td width="20%">
                 @name
             </td>
-            <td width="33%">
+            <td width="35%">
                 @lineForSem1
             </td>
-            <td width="33%">
+            <td width="35%">
                 @lineForSem2
             </td>
             <td>
                 <form action="AddGrade" method="get">
                     <input  type="hidden" name="studentId" value="@student.StudentId" />
                     <input  type="hidden" name="lessonId" value="@Model.LessonId" />
+                    <input  type="hidden" name="classId" value="@Model.ClassId" />
                     <input type="submit" value="Dodaj" />
                 </form>
             </td>

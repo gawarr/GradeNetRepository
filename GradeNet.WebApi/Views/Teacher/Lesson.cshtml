@@ -6,6 +6,15 @@
 }
 
 <style>
+    .content {
+        border: 1px solid #aaa;
+        padding-bottom: 15px;
+        margin-top: 15px;
+    }
+
+    hr {
+        width: 95%;
+    }
     table {
         border-collapse: collapse;
     }
@@ -18,39 +27,31 @@
     }
 </style>
 
-<div class="container" style="padding: 0;">
-    <div class="row">
-        <div class="col-md-2">
-            @Html.Partial("~/Views/Teacher/_LeftSidePanel_Lesson.cshtml", new List<int>(x))
-        </div>
-        <div class="col-md-8">
-            <h3>Klasa @Model.ClassName - @Model.LessonName</h3>
-            <hr>
-            <h4>Wychowawca</h4>
-            <p>@name</p>
-            <br />
-            @if (Model.PreviewTypeId == 0 || Model.PreviewTypeId == 1)
-            {
-                <div class="row" style="margin-bottom:10px;">
-                    <div class="col-md-10">
-                        @Html.Partial("~/Views/Teacher/_StudentsGradesList.cshtml", Model)
-                    </div>
+<div class="row" style="padding: 0 15px 0 0;">
+    <div class="col-md-2">
+        @Html.Partial("~/Views/Teacher/_LeftSidePanel_Lesson.cshtml", new List<int>(x))
+    </div>
+    <div class="col-md-10 content">
+        <h3>Klasa @Model.ClassName - @Model.LessonName</h3>
+        <hr>
+        <h4>Wychowawca</h4>
+        <p>@name</p>
+        <br />
+        @if (Model.PreviewTypeId == 0 || Model.PreviewTypeId == 1)
+        {
+            <div class="row" style="margin-bottom:10px;">
+                <div class="col-md-12">
+                    @Html.Partial("~/Views/Teacher/_StudentsGradesList.cshtml", Model)
                 </div>
-            }
-            @if (Model.PreviewTypeId == 2)
-            {
-                <div class="row" style="margin-bottom:10px;">
-                    <div class="col-md-10">
-                        @Html.Partial("~/Views/Teacher/_SubjectsList.cshtml", Model.SubjectsList)
-                    </div>
+            </div>
+        }
+        @if (Model.PreviewTypeId == 2)
+        {
+            <div class="row" style="margin-bottom:10px;">
+                <div class="col-md-12">
+                    @Html.Partial("~/Views/Teacher/_SubjectsList.cshtml", Model.SubjectsList)
                 </div>
-            }
-        </div>
+            </div>
+        }
     </div>
 </div>
-
-<script>
-    function AddGrade(studentId) {
-        alert(studentId);
-    }
-</script>

@@ -11,6 +11,9 @@
         <Function Name="ClassGet" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="School">
           <Parameter Name="ClassId" Type="int" Mode="In" />
         </Function>
+        <Function Name="EventsGet_ForClass" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="School">
+          <Parameter Name="ClassId" Type="int" Mode="In" />
+        </Function>
         <Function Name="LessonGet" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="School">
           <Parameter Name="LessonId" Type="int" Mode="In" />
         </Function>
@@ -97,7 +100,10 @@
           <Parameter Name="LessonId" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="StudentsCommentsGet" ReturnType="Collection(GradeNet_PRODModel.StudentsCommentsGet_Result)">
-            <Parameter Name="StudentId" Mode="In" Type="Int32" />
+          <Parameter Name="StudentId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="EventsGet_ForClass" ReturnType="Collection(GradeNet_PRODModel.EventsGet_ForClass_Result)">
+            <Parameter Name="ClassId" Mode="In" Type="Int32" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="UserGet_Result">
@@ -174,6 +180,13 @@
           <Property Type="String" Name="TeacherSecondName" Nullable="true" MaxLength="30" />
           <Property Type="String" Name="TeacherSurname" Nullable="false" MaxLength="60" />
           <Property Type="DateTime" Name="CreationTime" Nullable="false" Precision="23" />
+        </ComplexType>
+        <ComplexType Name="EventsGet_ForClass_Result">
+          <Property Type="Int64" Name="EventId" Nullable="false" />
+          <Property Type="String" Name="EventType" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="Shortcut" Nullable="false" MaxLength="5" />
+          <Property Type="DateTime" Name="EventDate" Nullable="false" />
+          <Property Type="String" Name="Description" Nullable="false" MaxLength="100" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -297,6 +310,17 @@
                 <ScalarProperty Name="TeacherSecondName" ColumnName="TeacherSecondName" />
                 <ScalarProperty Name="TeacherSurname" ColumnName="TeacherSurname" />
                 <ScalarProperty Name="CreationTime" ColumnName="CreationTime" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="EventsGet_ForClass" FunctionName="GradeNet_PRODModel.Store.EventsGet_ForClass">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="GradeNet_PRODModel.EventsGet_ForClass_Result">
+                <ScalarProperty Name="EventId" ColumnName="EventId" />
+                <ScalarProperty Name="EventType" ColumnName="EventType" />
+                <ScalarProperty Name="Shortcut" ColumnName="Shortcut" />
+                <ScalarProperty Name="EventDate" ColumnName="EventDate" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

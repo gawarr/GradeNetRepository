@@ -23,6 +23,7 @@ namespace GradeNet.WebApi.Controllers
         public ActionResult FindClass()
         {
             var years = _teacherManager.YearsGet();
+
             return View(years);
         }
 
@@ -30,6 +31,7 @@ namespace GradeNet.WebApi.Controllers
         public JsonResult GetHtmlForClassSelect(int year)
         {
             string html = _teacherManager.GetHtmlForClassSelect(year);
+
             return Json(new { html = html});
         }
 
@@ -37,12 +39,14 @@ namespace GradeNet.WebApi.Controllers
         public ActionResult Class(int classId)
         {
             var classVM = _teacherManager.ClassGet(classId);
+
             return View(classVM);
         }
 
         public ActionResult SelectLesson(int classId)
         {
             var lessons = _teacherManager.LessonsGet_ForClass(classId);
+
             return View(lessons);
         }
 
@@ -50,14 +54,16 @@ namespace GradeNet.WebApi.Controllers
         public ActionResult Lesson(int lessonId, int previewTypeId = 0)
         {
             var lessonVm = _teacherManager.GetLessonView(lessonId, previewTypeId);
+
             return View(lessonVm);
         }
 
         [HttpGet]
-        public ActionResult AddGrade(int studentId, int lessonId)
+        public ActionResult AddGrade(int studentId, int lessonId, int classId)
         {
             var model = new AddGradeViewModel();
-            model.LessonId = 1;
+            model.LessonId = lessonId;
+            model.ClassId = classId;
             model.LessonName = "Matematyka";
             model.Student = new StudentViewModel(studentId, "Andrzej", null, "Nazwisko");
 
@@ -119,6 +125,22 @@ namespace GradeNet.WebApi.Controllers
             var commentsList = _teacherManager.StudentsCommentsGet(studentId);
 
             return View("StudentsComments", commentsList);
+        }
+
+        [HttpGet]
+        public ActionResult ClassEvents(int classId)
+        {
+            var viewModel = new ClassEventsViewModel();
+            viewModel.EventsList = _teacherManager.EventsGet_ForClass(classId);
+            viewModel.Class = _teacherManager.ClassGet(classId);
+
+            return View(viewModel);
+        }
+
+        [HttpGet]
+        public ActionResult DeleteEvent(long eventId, int classId)
+        {
+            return View();
         }
     }
 }

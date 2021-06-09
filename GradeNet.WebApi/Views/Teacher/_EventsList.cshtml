@@ -1,0 +1,46 @@
+﻿@model List<GradeNet.Infrastructure.ViewModels.EventViewModel>
+<h4>Lista zapowiedzianych wydarzeń</h4> 
+<table>
+    <tr>
+        <th>
+            Data
+        </th>
+        <th>
+            Wydarzenie
+        </th>
+        <th>
+            Opis
+        </th>
+        @*<th></th>*@
+        <th></th>
+    </tr>
+    @foreach (var ev in Model)
+    {
+     <tr>
+         <td>
+             @ev.EventDate.ToString("dd-MM-yyyy")
+         </td>
+         <td>
+             @ev.EventType
+         </td>
+         <td>
+             @ev.Description
+         </td>
+         @*<td>
+             <form action="EditEvent" method="get">
+                 <input type="hidden" name="classId" value="@ViewBag.ClassId" />
+                 <input type="hidden" name="eventId" value="@ev.EventId" />
+                 <input type="submit" value="Edytuj" />
+             </form>
+         </td>*@
+         <td>
+             <form action="DeleteEvent" method="get">
+                 <input type="hidden" name="classId" value="@ViewBag.ClassId" />
+                 <input type="hidden" name="eventId" value="@ev.EventId" />
+                 <input type="submit" value="Usuń" />
+             </form>
+         </td>
+     </tr>
+    }
+</table>
+    

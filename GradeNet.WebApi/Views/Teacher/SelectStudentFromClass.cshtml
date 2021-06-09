@@ -3,7 +3,8 @@
 <style>
     .content {
         border: 1px solid #aaa;
-        padding: 15px;
+        padding-bottom: 15px;
+        margin-top: 15px;
     }
 
     hr {
@@ -23,45 +24,46 @@
     }
 </style>
 
-<div class="container" style="padding: 20px 20%;">
-    <div class="row">
-        <div class="col-md-12 content">
-            <h4>Wybór ucznia:</h4>
-            <hr>
-            <div class="row" style="margin-bottom:10px;">
-                <div class="col-md-8">
-                    <table>
+<div class="row" style="padding: 0 15px 0 0;">
+    <div class="col-md-2">
+        @Html.Partial("~/Views/Teacher/_LeftSidePanel_Class.cshtml", (int)ViewBag.ClassId)
+    </div>
+    <div class="col-md-10 content">
+        <h4>Wybór ucznia:</h4>
+        <hr>
+        <div class="row" style="margin-bottom:10px;">
+            <div class="col-md-8">
+                <table>
+                    <tr>
+                        <th>
+                            lp.
+                        </th>
+                        <th width="60%">
+                            Nazwisko i imię
+                        </th>
+                        <th></th>
+                    </tr>
+                    @foreach (var student in Model)
+                    {
+                        name = String.IsNullOrEmpty(student.SecondName) ? $"{student.Surname} {student.FirstName}" : $"{student.Surname} {student.FirstName} {student.SecondName}";
+    
                         <tr>
-                            <th>
-                                lp.
-                            </th>
-                            <th width="60%">
-                                Nazwisko i imię
-                            </th>
-                            <th></th>
+                            <td style="text-align: center;">
+                                @student.StudentId.ToString().
+                            </td>
+                            <td>
+                                @name
+                            </td>
+                            <td>
+                                <form action="StudentsComments" method="get">
+                                    <input type="hidden" name="studentId" value="@student.StudentId" />
+                                    <input type="hidden" name="classId" value="@ViewBag.ClassId" />
+                                    <input type="submit" value="Podgląd" />
+                                </form>
+                            </td>
                         </tr>
-                        @foreach (var student in Model)
-                        {
-                            name = String.IsNullOrEmpty(student.SecondName) ? $"{student.Surname} {student.FirstName}" : $"{student.Surname} {student.FirstName} {student.SecondName}";
-
-                            <tr>
-                                <td style="text-align: center;">
-                                    @student.StudentId.ToString().
-                                </td>
-                                <td>
-                                    @name
-                                </td>
-                                <td>
-                                    <form action="StudentsComments" method="get">
-                                        <input type="hidden" name="studentId" value="@student.StudentId" />
-                                        <input type="hidden" name="classId" value="@ViewBag.ClassId" />
-                                        <input type="submit" value="Podgląd" />
-                                    </form>
-                                </td>
-                            </tr>
-                        }
-                    </table>
-                </div>
+                    }
+                </table>
             </div>
         </div>
     </div>

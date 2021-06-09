@@ -7,6 +7,12 @@
 }
 
 <style>
+    .content {
+        border: 1px solid #aaa;
+        padding-bottom: 15px;
+        margin-top: 15px;
+    }
+
     table {
         border-collapse: collapse;
     }
@@ -19,69 +25,60 @@
     }
 </style>
 
-<div class="container" style="padding: 0;">
-    <div class="row">
-        <div class="col-md-2">
-            @Html.Partial("~/Views/Teacher/_LeftSidePanel_Class.cshtml", (int)ViewBag.ClassId)
-        </div>
-        <div class="col-md-10 content">
-            <h3>Uczeń @sName</h3>
-            <hr>
-            <h4>Lista uwag</h4>
-            <table>
+<div class="row" style="padding: 0 15px 0 0;">
+    <div class="col-md-2">
+        @Html.Partial("~/Views/Teacher/_LeftSidePanel_Class.cshtml", (int)ViewBag.ClassId)
+    </div>
+    <div class="col-md-10 content">
+        <h3>Uczeń @sName</h3>
+        <hr>
+        <h4>Lista uwag</h4>
+        <table>
+            <tr>
+                <th>
+                    lp.
+                </th>
+                <th width="30%">
+                    Autor i data
+                </th>
+                <th width="60%">
+                    Treść
+                </th>
+                @*<th></th>*@
+                <th></th>
+            </tr>
+            @foreach (var com in Model)
+            {
+                tName = String.IsNullOrEmpty(com.TeacherSecondName) ? $"{com.TeacherFirstName} {com.TeacherSurname}" : $"{com.TeacherFirstName} {com.TeacherSecondName} {com.TeacherSurname}";
                 <tr>
-                    <th>
-                        lp.
-                    </th>
-                    <th>
-                        Autor i data
-                    </th>
-                    <th>
-                        Treść
-                    </th>
-                    @*<th></th>*@
-                    <th></th>
+                    <td>
+                        @i.ToString().
+                    </td>
+                    <td>
+                        @tName - @com.CreationTime.ToString("dd-MM-yyyy")
+                    </td>
+                    <td>
+                        @com.Content
+                    </td>
+                    @*<td>
+                        <form action="EditComment" method="get">
+                            <input type="hidden" name="commentId" value="@com.CommentId" />
+                            <input type="hidden" name="studentId" value="@com.Student.StudentId" />
+                            <input type="hidden" name="classId" value="@ViewBag.ClassId" />
+                            <input type="submit" value="Edytuj" />
+                        </form>
+                    </td>*@
+                    <td>
+                        <form action="DeleteComment" method="get">
+                            <input type="hidden" name="commentId" value="@com.CommentId" />
+                            <input type="hidden" name="studentId" value="@com.Student.StudentId" />
+                            <input type="hidden" name="classId" value="@ViewBag.ClassId" />
+                            <input type="submit" value="Usuń" />
+                        </form>
+                    </td>
                 </tr>
-                @foreach (var com in Model)
-                {
-                    tName = String.IsNullOrEmpty(com.TeacherSecondName) ? $"{com.TeacherFirstName} {com.TeacherSurname}" : $"{com.TeacherFirstName} {com.TeacherSecondName} {com.TeacherSurname}";
-                    <tr>
-                        <td>
-                            @i.ToString().
-                        </td>
-                        <td>
-                            @tName
-                            @com.CreationTime
-                        </td>
-                        <td>
-                            @com.Content
-                        </td>
-                        @*<td>
-                            <form action="EditComment" method="get">
-                                <input type="hidden" name="commentId" value="@com.CommentId" />
-                                <input type="hidden" name="studentId" value="@com.Student.StudentId" />
-                                <input type="hidden" name="classId" value="@ViewBag.ClassId" />
-                                <input type="submit" value="Edytuj" />
-                            </form>
-                        </td>*@
-                        <td>
-                            <form action="DeleteComment" method="get">
-                                <input type="hidden" name="commentId" value="@com.CommentId" />
-                                <input type="hidden" name="studentId" value="@com.Student.StudentId" />
-                                <input type="hidden" name="classId" value="@ViewBag.ClassId" />
-                                <input type="submit" value="Usuń" />
-                            </form>
-                        </td>
-                    </tr>
-                    i++;
-                }
-            </table>
-        </div>
+                i++;
+            }
+        </table>
     </div>
 </div>
-
-<script>
-    function AddGrade(studentId) {
-        alert(studentId);
-    }
-</script>
