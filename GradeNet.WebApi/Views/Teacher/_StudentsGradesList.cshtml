@@ -1,21 +1,66 @@
-﻿@model List<GradeNet.Infrastructure.ViewModels.GradeViewModel>
+﻿@model GradeNet.Infrastructure.ViewModels.LessonViewModel
 
 @{ 
-    var studentsIdList = new List<int>();
-    studentsIdList.AddRange(Model.Select(x => x.StudentId));
-    //list.AddRange(result.Select(x => new GradeModel(x.StudentGradeId, x.Grade, x.Style, x.StudentId)));
+    string name = String.Empty;
+    string lineForSem1 = "";
+    string lineForSem2 = "";
 }
 
-<h4>Oceny</h4>
-<ol>
-    @foreach (var nr in studentsIdList.Distinct())
+<h4>Lista uczniów</h4>
+<table>
+    <tr>
+        <th>
+            lp.
+        </th>
+        <th>
+            Nazwisko i imię
+        </th>
+        <th>
+            Semestr I
+        </th>
+        <th>
+            Semestr II
+        </th>
+        <th></th>
+    </tr>
+    @foreach (var student in Model.StudentsList)
     {
-        string line = String.Empty;
-        foreach(var grade in Model.Where(x => x.StudentId == nr))
-        {
+        name = String.IsNullOrEmpty(student.SecondName) ? $"{student.Surname} {student.FirstName}" : $"{student.Surname} {student.FirstName} {student.SecondName}";
 
-            line += $", {grade.Grade}";
+        lineForSem1 = "";
+        foreach (var grade in Model.StudentsGradesList.Where(x => x.StudentId == student.StudentId && x.Semester == 1))
+        {
+            lineForSem1 += $", {grade.Grade}";
         }
-        <li>@line.Substring(2)</li>;
+        lineForSem1 = lineForSem1.Length > 1 ? lineForSem1.Substring(2) : "";
+
+        lineForSem2 = "";
+        foreach (var grade in Model.StudentsGradesList.Where(x => x.StudentId == student.StudentId && x.Semester == 2))
+        {
+            lineForSem2 += $", {grade.Grade}";
+        }
+        lineForSem2 = lineForSem2.Length > 1 ? lineForSem2.Substring(2) : "";
+
+        <tr>
+            <td style="text-align: center;">
+                @student.StudentId.ToString().
+            </td>
+            <td width="24%">
+                @name
+            </td>
+            <td width="33%">
+                @lineForSem1
+            </td>
+            <td width="33%">
+                @lineForSem2
+            </td>
+            <td>
+                <form action="AddGrade" method="get">
+                    <input  type="hidden" name="studentId" value="@student.StudentId" />
+                    <input  type="hidden" name="lessonId" value="@Model.LessonId" />
+                    <input type="submit" value="Dodaj" />
+                </form>
+            </td>
+        </tr>
     }
-</ol>
+</table>

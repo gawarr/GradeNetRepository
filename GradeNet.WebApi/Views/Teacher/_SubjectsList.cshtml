@@ -1,0 +1,32 @@
+﻿@model List<GradeNet.Infrastructure.ViewModels.SubjectViewModel>
+@{ int i = 1; } 
+<h4>Tematy</h4> 
+<table>
+    <tr>
+        <th>
+            lp.
+        </th>
+        <th>
+            Data
+        </th>
+        <th>
+            Temat
+        </th>
+    </tr>
+    @foreach (var sb in Model)
+    {
+        <tr>
+            <td style="text-align: center;">
+                @i.ToString().
+            </td>
+            <td>
+                @sb.SubjectDate.ToString("dd/MM/yyyy")
+            </td>
+            <td width="100%">
+                @sb.Subject
+            </td>
+        </tr>
+        i++;
+    }
+</table>
+    

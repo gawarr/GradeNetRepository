@@ -49,6 +49,8 @@
     <Compile Include="Models\GradeModel.cs" />
     <Compile Include="Models\LessonModel.cs" />
     <Compile Include="Models\ClassModel.cs" />
+    <Compile Include="Models\CommentsModel.cs" />
+    <Compile Include="Models\SubjectModel.cs" />
     <Compile Include="Models\StudentModel.cs" />
     <Compile Include="Models\UserDetailsModel.cs" />
     <Compile Include="Models\UserModel.cs" />

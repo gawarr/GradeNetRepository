@@ -17,13 +17,15 @@ namespace GradeNet.Infrastructure.ViewModels
         public UserDetailsViewModel TeacherDetails { get; set; }
         public List<StudentViewModel> StudentsList { get; set; }
         public List<GradeViewModel> StudentsGradesList { get; set; }
+        public List<SubjectViewModel> SubjectsList { get; set; }
 
         public LessonViewModel() { }
 
-        public LessonViewModel(int lessonId, string lessonName)
+        public LessonViewModel(int lessonId, string lessonName, int classId)
         {
             LessonId = lessonId;
             LessonName = lessonName;
+            ClassId = classId;
         }
 
         public LessonViewModel(int lessonId, string lessonName, int classId, string className, int teacherId, UserDetailsViewModel teacherDetails)

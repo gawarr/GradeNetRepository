@@ -69,7 +69,7 @@ namespace GradeNet.Infrastructure.Managers
 
             var list = _teacherRepository.LessonsGet_ForClass(classId);
             if (list.Any())
-                lessonsList.AddRange(list.Select(x => new LessonViewModel(x.LessonId, x.LessonName)));
+                lessonsList.AddRange(list.Select(x => new LessonViewModel(x.LessonId, x.LessonName, classId)));
 
             return lessonsList;
         }
@@ -81,27 +81,46 @@ namespace GradeNet.Infrastructure.Managers
             var lessonVM = new LessonViewModel(model.LessonId, model.LessonName, model.ClassId, model.ClassName, model.TeacherId, 
                 new UserDetailsViewModel(model.TeacherDetails.FirstName, model.TeacherDetails.SecondName, model.TeacherDetails.Surname));
 
-            var studentsList = _teacherRepository.StudentsGet(lessonVM.ClassId);
-
-            lessonVM.StudentsList = new List<StudentViewModel>();
-            if (studentsList.Any())
-                lessonVM.StudentsList.AddRange(studentsList.Select(x => new StudentViewModel(x.StudentId, x.FirstName, x.SecondName, x.Surname)));
+            lessonVM.PreviewTypeId = previewTypeId;
 
             switch ((PreviewEnum)previewTypeId)
             {
+                case PreviewEnum.Tematy:
+                    var subjectsList = _teacherRepository.SubjectsGet(lessonId);
+
+                    lessonVM.SubjectsList = new List<SubjectViewModel>();
+                    if (subjectsList.Any())
+                        lessonVM.SubjectsList.AddRange(subjectsList.Select(x => new SubjectViewModel(x.SubjectId, x.Subject, x.SubjectDate)));
+                    break;
+
                 case PreviewEnum.Oceny:
                 default:
-                    lessonVM.PreviewTypeId = (int)PreviewEnum.Oceny;
+                    var studentsList = _teacherRepository.StudentsGet(lessonVM.ClassId);
+
+                    lessonVM.StudentsList = new List<StudentViewModel>();
+                    if (studentsList.Any())
+                        lessonVM.StudentsList.AddRange(studentsList.Select(x => new StudentViewModel(x.StudentId, x.FirstName, x.SecondName, x.Surname)));
 
                     var gradesList = _teacherRepository.StudentsGradesGet_ForLesson(lessonId);
 
                     lessonVM.StudentsGradesList = new List<GradeViewModel>();
                     if (gradesList.Any())
-                        lessonVM.StudentsGradesList.AddRange(gradesList.Select(x => new GradeViewModel(x.GradeId, x.Grade, x.Style, x.StudentId)));
+                        lessonVM.StudentsGradesList.AddRange(gradesList.Select(x => new GradeViewModel(x.GradeId, x.Grade, x.Style, x.StudentId, ++x.Semester)));
                     break;
             }
 
             return lessonVM;
+        }
+
+        public List<CommentsViewModel> StudentsCommentsGet(int studentId)
+        {
+            var commentsList = new List<CommentsViewModel>();
+
+            var list = _teacherRepository.StudentsCommentsGet(studentId);
+            if (list.Any())
+                commentsList.AddRange(list.Select(x => new CommentsViewModel(x.CommentId, x.Content, new StudentViewModel(studentId, x.Student.FirstName, x.Student.SecondName, x.Student.Surname), x.TeacherFirstName, x.TeacherSecondName, x.TeacherSurname, x.CreationTime)));
+
+            return commentsList;
         }
     }
 }

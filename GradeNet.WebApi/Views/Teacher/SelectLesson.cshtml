@@ -1,5 +1,9 @@
 ﻿@model List<GradeNet.Infrastructure.ViewModels.LessonViewModel>
 
+@{
+    int[] x = { Model[0].ClassId };
+}
+
 <style>
     .content {
         border: 1px solid #aaa;
@@ -18,9 +22,12 @@
     }
 </style>
 
-<div class="container" style="padding: 20px 20%;">
+<div class="container" style="padding: 0;">
     <div class="row">
-        <div class="col-md-12 content">
+        <div class="col-md-2">
+            @Html.Partial("~/Views/Teacher/_LeftSidePanel_Lesson.cshtml", new List<int>(x))
+        </div>
+        <div class="col-md-6 content" style="margin-top: 20px">
             <h4>Wybór lekcji</h4>
             <hr>
             <form action="Lesson" method="get">

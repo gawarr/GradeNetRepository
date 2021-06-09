@@ -15,5 +15,6 @@ namespace GradeNet.Infrastructure.Interfaces
         ClassViewModel ClassGet(int classId);
         List<LessonViewModel> LessonsGet_ForClass(int classId);
         LessonViewModel GetLessonView(int lessonId, int previewTypeId);
+        List<CommentsViewModel> StudentsCommentsGet(int studentId);
     }
 }

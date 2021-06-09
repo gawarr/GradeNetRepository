@@ -96,7 +96,13 @@
     <Compile Include="StudentGradesGet_ForLesson_Result.cs">
       <DependentUpon>GradeNetModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="StudentsCommentsGet_Result.cs">
+      <DependentUpon>GradeNetModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="StudentsGet_Result.cs">
+      <DependentUpon>GradeNetModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SubjectsGet_Result.cs">
       <DependentUpon>GradeNetModel.tt</DependentUpon>
     </Compile>
     <Compile Include="UserDetailsGet_Result.cs">
@@ -105,10 +111,14 @@
     <Compile Include="UserGet_Result.cs">
       <DependentUpon>GradeNetModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="ViewModels\AddGradeViewModel.cs" />
+    <Compile Include="ViewModels\StudentsCommentsViewModel.cs" />
     <Compile Include="ViewModels\GradeViewModel.cs" />
+    <Compile Include="ViewModels\CommentsViewModel.cs" />
     <Compile Include="ViewModels\LessonViewModel.cs" />
     <Compile Include="ViewModels\ClassViewModel.cs" />
     <Compile Include="ViewModels\FindClassViewModel.cs" />
+    <Compile Include="ViewModels\SubjectViewModel.cs" />
     <Compile Include="ViewModels\StudentViewModel.cs" />
     <Compile Include="ViewModels\UserDetailsViewModel.cs" />
     <Compile Include="ViewModels\UserViewModel.cs" />

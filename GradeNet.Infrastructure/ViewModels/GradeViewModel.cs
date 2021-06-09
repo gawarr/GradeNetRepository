@@ -12,15 +12,17 @@ namespace GradeNet.Infrastructure.ViewModels
         public string Grade { get; set; }
         public string Style { get; set; }
         public int StudentId { get; set; }
+        public byte Semester { get; set; }
 
         public GradeViewModel() { }
 
-        public GradeViewModel(long gradeId, string grade, string style, int studentId)
+        public GradeViewModel(long gradeId, string grade, string style, int studentId, byte semester)
         {
             GradeId = gradeId;
             Grade = grade;
             Style = style;
             StudentId = studentId;
+            Semester = semester;
         }
     }
 }

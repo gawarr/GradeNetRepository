@@ -127,15 +127,6 @@ namespace GradeNet.Infrastructure
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<LessonsGet_ForClass_Result>("LessonsGet_ForClass", classIdParameter);
         }
     
-        public virtual ObjectResult<StudentGradesGet_ForLesson_Result> StudentGradesGet_ForLesson(Nullable<int> lessonId)
-        {
-            var lessonIdParameter = lessonId.HasValue ?
-                new ObjectParameter("LessonId", lessonId) :
-                new ObjectParameter("LessonId", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<StudentGradesGet_ForLesson_Result>("StudentGradesGet_ForLesson", lessonIdParameter);
-        }
-    
         public virtual ObjectResult<ClassGet_Result> ClassGet(Nullable<int> classId)
         {
             var classIdParameter = classId.HasValue ?
@@ -152,6 +143,33 @@ namespace GradeNet.Infrastructure
                 new ObjectParameter("LessonId", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<LessonGet_Result>("LessonGet", lessonIdParameter);
+        }
+    
+        public virtual ObjectResult<SubjectsGet_Result> SubjectsGet(Nullable<int> lessonId)
+        {
+            var lessonIdParameter = lessonId.HasValue ?
+                new ObjectParameter("LessonId", lessonId) :
+                new ObjectParameter("LessonId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SubjectsGet_Result>("SubjectsGet", lessonIdParameter);
+        }
+    
+        public virtual ObjectResult<StudentGradesGet_ForLesson_Result> StudentGradesGet_ForLesson(Nullable<int> lessonId)
+        {
+            var lessonIdParameter = lessonId.HasValue ?
+                new ObjectParameter("LessonId", lessonId) :
+                new ObjectParameter("LessonId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<StudentGradesGet_ForLesson_Result>("StudentGradesGet_ForLesson", lessonIdParameter);
+        }
+    
+        public virtual ObjectResult<StudentsCommentsGet_Result> StudentsCommentsGet(Nullable<int> studentId)
+        {
+            var studentIdParameter = studentId.HasValue ?
+                new ObjectParameter("StudentId", studentId) :
+                new ObjectParameter("StudentId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<StudentsCommentsGet_Result>("StudentsCommentsGet", studentIdParameter);
         }
     }
 }

@@ -11,12 +11,10 @@ namespace GradeNet.Infrastructure
 {
     using System;
     
-    public partial class StudentGradesGet_ForLesson_Result
+    public partial class SubjectsGet_Result
     {
-        public long StudentGradeId { get; set; }
-        public string Grade { get; set; }
-        public string Style { get; set; }
-        public int StudentId { get; set; }
-        public bool Semester { get; set; }
+        public long SubjectId { get; set; }
+        public string Subject { get; set; }
+        public System.DateTime SubjectDate { get; set; }
     }
 }

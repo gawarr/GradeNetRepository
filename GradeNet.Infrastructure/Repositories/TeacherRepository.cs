@@ -145,7 +145,7 @@ namespace GradeNet.Infrastructure.Repositories
                 {
                     var result = context.StudentGradesGet_ForLesson(lessonId).ToList();
                     if (result.Any())
-                        list.AddRange(result.Select(x => new GradeModel(x.StudentGradeId, x.Grade, x.Style, x.StudentId)));
+                        list.AddRange(result.Select(x => new GradeModel(x.StudentGradeId, x.Grade, x.Style, x.StudentId, Convert.ToByte(x.Semester))));
                 }
 
                 return list;
@@ -153,6 +153,48 @@ namespace GradeNet.Infrastructure.Repositories
             catch (Exception ex)
             {
                 return new List<GradeModel>();
+            }
+        }
+
+        public List<SubjectModel> SubjectsGet(int lessonId)
+        {
+            try
+            {
+                var list = new List<SubjectModel>();
+
+                using (GradeNet_Entities context = new GradeNet_Entities())
+                {
+                    var result = context.SubjectsGet(lessonId).ToList();
+                    if (result.Any())
+                        list.AddRange(result.Select(x => new SubjectModel(x.SubjectId, x.Subject, x.SubjectDate)));
+                }
+
+                return list;
+            }
+            catch (Exception ex)
+            {
+                return new List<SubjectModel>();
+            }
+        }
+
+        public List<CommentsModel> StudentsCommentsGet(int studentId)
+        {
+            try
+            {
+                var list = new List<CommentsModel>();
+
+                using (GradeNet_Entities context = new GradeNet_Entities())
+                {
+                    var result = context.StudentsCommentsGet(studentId).ToList();
+                    if (result.Any())
+                        list.AddRange(result.Select(x => new CommentsModel(x.CommentId, x.Content, new StudentModel(studentId, x.StudentFirstName, x.StudentSecondName, x.StudentSurname), x.TeacherFirstName, x.TeacherSecondName, x.TeacherSurname, x.CreationTime)));
+                }
+
+                return list;
+            }
+            catch (Exception ex)
+            {
+                return new List<CommentsModel>();
             }
         }
     }
