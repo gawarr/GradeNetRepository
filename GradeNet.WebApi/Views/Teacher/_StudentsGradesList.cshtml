@@ -6,7 +6,13 @@
     string lineForSem2 = "";
 }
 
-<h4>Lista uczniów</h4>
+<div>
+    <h4>Lista uczniów</h4>
+    @if (ViewBag.Info != "")
+    {
+        <h4 style="color: #00921e;">@ViewBag.Info</h4>
+    }
+</div>
 <table>
     <tr>
         <th>
@@ -56,9 +62,10 @@
             </td>
             <td>
                 <form action="AddGrade" method="get">
-                    <input  type="hidden" name="studentId" value="@student.StudentId" />
-                    <input  type="hidden" name="lessonId" value="@Model.LessonId" />
-                    <input  type="hidden" name="classId" value="@Model.ClassId" />
+                    <input type="hidden" name="studentId" value="@student.StudentId" />
+                    <input type="hidden" name="studentName" value="@name" />
+                    <input type="hidden" name="lessonId" value="@Model.LessonId" />
+                    <input type="hidden" name="classId" value="@Model.ClassId" />
                     <input type="submit" value="Dodaj" />
                 </form>
             </td>

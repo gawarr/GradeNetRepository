@@ -20,6 +20,14 @@
         <Function Name="LessonsGet_ForClass" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="School">
           <Parameter Name="ClassId" Type="int" Mode="In" />
         </Function>
+        <Function Name="StudentGradeAdd" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="School">
+          <Parameter Name="Grade" Type="varchar" Mode="In" />
+          <Parameter Name="Semester" Type="bit" Mode="In" />
+          <Parameter Name="StyleId" Type="tinyint" Mode="In" />
+          <Parameter Name="StudentId" Type="int" Mode="In" />
+          <Parameter Name="LessonId" Type="int" Mode="In" />
+          <Parameter Name="Email" Type="varchar" Mode="In" />
+        </Function>
         <Function Name="StudentGradesGet_ForLesson" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="School">
           <Parameter Name="LessonId" Type="int" Mode="In" />
         </Function>
@@ -103,7 +111,15 @@
           <Parameter Name="StudentId" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="EventsGet_ForClass" ReturnType="Collection(GradeNet_PRODModel.EventsGet_ForClass_Result)">
-            <Parameter Name="ClassId" Mode="In" Type="Int32" />
+          <Parameter Name="ClassId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="StudentGradeAdd">
+            <Parameter Name="Grade" Mode="In" Type="String" />
+            <Parameter Name="Semester" Mode="In" Type="Boolean" />
+            <Parameter Name="StyleId" Mode="In" Type="Byte" />
+            <Parameter Name="StudentId" Mode="In" Type="Int32" />
+            <Parameter Name="LessonId" Mode="In" Type="Int32" />
+            <Parameter Name="Email" Mode="In" Type="String" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="UserGet_Result">
@@ -324,6 +340,7 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="StudentGradeAdd" FunctionName="GradeNet_PRODModel.Store.StudentGradeAdd" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

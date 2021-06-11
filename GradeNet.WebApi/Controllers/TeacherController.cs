@@ -10,7 +10,7 @@ using System.Web.Security;
 
 namespace GradeNet.WebApi.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "Teacher")]
     public class TeacherController : Controller
     {
         private readonly ITeacherManager _teacherManager;
@@ -59,32 +59,49 @@ namespace GradeNet.WebApi.Controllers
         }
 
         [HttpGet]
-        public ActionResult AddGrade(int studentId, int lessonId, int classId)
+        public ActionResult AddGrade(int studentId, string studentName, int lessonId, int classId)
         {
             var model = new AddGradeViewModel();
+
+            model.StudentId = studentId;
+            model.StudentName = studentName;
+
             model.LessonId = lessonId;
+            var lesson = _teacherManager.LessonGet(lessonId);
+            model.LessonName = lesson.LessonName;
+
             model.ClassId = classId;
-            model.LessonName = "Matematyka";
-            model.Student = new StudentViewModel(studentId, "Andrzej", null, "Nazwisko");
 
             return View(model);
         }
 
         [HttpPost]
-        public ActionResult AddGrade(int studentId, int lessonId, string grade, string style, string semester)
+        public ActionResult AddGrade(int studentId, string studentName, int lessonId, string lessonName, string grade, int style, string semester, int classId)
         {
             var model = new AddGradeViewModel();
-            model.LessonId = 1;
-            model.LessonName = "Matematyka";
-            model.Student = new StudentViewModel(studentId, "Andrzej", null, "Nazwisko");
 
-            var isCorrect = false;
-            ViewBag.Error = "Błędne dane!";
+            model.StudentId = studentId;
+            model.StudentName = studentName;
+
+            model.LessonId = lessonId;
+            model.LessonName = lessonName;
+
+            model.ClassId = classId;
+
+            string teacherEmail = User.Identity.Name;
+
+            var isCorrect = _teacherManager.GradeAdd(grade, semester, style, studentId, lessonId, teacherEmail);
 
             if (isCorrect)
+            {
+                ViewBag.Info = "Dodano ocenę";
                 return View("Lesson", _teacherManager.GetLessonView(lessonId, 0));
+            }
             else
+            {
+                ViewBag.Info = "Błąd przy dodawaniu oceny";
                 return View(model);
+            }
         }
 
         [HttpGet]

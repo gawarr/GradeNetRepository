@@ -74,9 +74,18 @@ namespace GradeNet.Infrastructure.Managers
             return lessonsList;
         }
 
+        public LessonViewModel LessonGet(int lessonId)
+        {
+            var model = _teacherRepository.LessonGet(lessonId);
+            var lessons = new LessonViewModel(model.LessonId, model.LessonName, model.ClassId, model.ClassName, model.TeacherId, 
+                new UserDetailsViewModel(model.TeacherDetails.FirstName, model.TeacherDetails.SecondName, model.TeacherDetails.Surname));
+
+            return lessons;
+        }
+
         public LessonViewModel GetLessonView(int lessonId, int previewTypeId)
         {
-            var model = _teacherRepository.LessonsGet(lessonId);
+            var model = _teacherRepository.LessonGet(lessonId);
 
             var lessonVM = new LessonViewModel(model.LessonId, model.LessonName, model.ClassId, model.ClassName, model.TeacherId, 
                 new UserDetailsViewModel(model.TeacherDetails.FirstName, model.TeacherDetails.SecondName, model.TeacherDetails.Surname));
@@ -132,6 +141,50 @@ namespace GradeNet.Infrastructure.Managers
                 eventsList.AddRange(list.Select(x => new EventViewModel(x.EventId, x.EventType, x.Shortcut, x.EventDate, x.Description)));
 
             return eventsList;
+        }
+
+        public bool GradeAdd(string grade, string semester, int styleId, int studentId, int lessonId, string email) 
+        {
+            bool isCorrect = GradeValidation(grade, semester, out int sem);
+
+            if(isCorrect)
+                return _teacherRepository.GradeAdd(grade, sem, Convert.ToInt32(styleId), studentId, lessonId, email);
+
+            return false;
+        }
+
+        private bool GradeValidation(string grade, string semester, out int sem)
+        {
+            char[] s = { '1', '2' };
+            sem = 0;
+
+            if (semester.Length != 1)
+                return false;
+
+            if (!s.Contains(semester[0]))
+                return false;
+
+            sem = Convert.ToInt32(semester) - 1;
+
+            char[] p1 = { '1', '2', '3', '4', '5', '6', '-', '+' };
+            char[] p2 = { '+', '-', '=' };
+
+            if (grade.Length < 1 || grade.Length > 2)
+                return false;
+
+            if (!p1.Contains(grade[0]))
+                return false;
+
+            if (grade.Length == 2)
+            {
+                if (!p2.Contains(grade[1]))
+                    return false;
+
+                if ((grade[0] == '6' && grade[1] == '+') || (grade[0] == '1' && (grade[1] == '-' || grade[1] == '=')))
+                    return false;
+            }
+
+            return true;
         }
     }
 }

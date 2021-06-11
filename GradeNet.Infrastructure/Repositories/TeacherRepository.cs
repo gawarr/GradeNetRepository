@@ -113,7 +113,7 @@ namespace GradeNet.Infrastructure.Repositories
             }
         }
 
-        public LessonModel LessonsGet(int lessonId)
+        public LessonModel LessonGet(int lessonId)
         {
             try
             {
@@ -216,6 +216,23 @@ namespace GradeNet.Infrastructure.Repositories
             catch (Exception ex)
             {
                 return new List<EventModel>();
+            }
+        }
+
+        public bool GradeAdd(string grade, int semester, int styleId, int studentId, int lessonId, string email)
+        {
+            try
+            {
+                using(var context = new GradeNet_Entities())
+                {
+                    context.StudentGradeAdd(grade, Convert.ToBoolean(semester), Convert.ToByte(styleId), studentId, lessonId, email);
+                }
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
             }
         }
     }

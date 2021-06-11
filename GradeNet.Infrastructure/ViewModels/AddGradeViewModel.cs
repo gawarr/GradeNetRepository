@@ -13,7 +13,8 @@ namespace GradeNet.Infrastructure.ViewModels
         public string LessonName { get; set; }
         public string Grade { get; set; }
         public byte Semestr { get; set; }
-        public StudentViewModel Student { get; set; }
+        public int StudentId { get; set; }
+        public string StudentName { get; set; }
         public int TeacherId { get; set; }
 
         public AddGradeViewModel() { }

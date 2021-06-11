@@ -2,7 +2,6 @@
 
 @{ 
     int[] x = { Model.ClassId, Model.LessonId };
-    string name = String.IsNullOrEmpty(Model.Student.SecondName) ? $"{Model.Student.FirstName} {Model.Student.Surname}" : $"{Model.Student.FirstName} {Model.Student.SecondName} {Model.Student.Surname}"; 
 }
 
 <style>
@@ -37,8 +36,9 @@
                     Uczeń:
                 </div>
                 <div class="col-md-4">
-                    @name
-                    <input type="hidden" name="studentId" value="@Model.Student.StudentId" />
+                    @Model.StudentName
+                    <input type="hidden" name="studentId" value="@Model.StudentId" />
+                    <input type="hidden" name="studentName" value="@Model.StudentName" />
                 </div>
             </div>
             <div class="row" style="margin-bottom:10px;">
@@ -48,6 +48,7 @@
                 <div class="col-md-4">
                     @Model.LessonName
                     <input type="hidden" name="lessonId" value="@Model.LessonId" />
+                    <input type="hidden" name="lessonName" value="@Model.LessonName" />
                 </div>
             </div>
             <div class="row" style="margin-bottom:10px;">
@@ -69,12 +70,13 @@
             </div>
             <div class="row">
                 <div class="col-md-2">
+                    <input type="hidden" name="classId" value="@Model.ClassId" />
                     <input type="submit" value="Dodaj" />
                 </div>
                 <div class="col-md-6">
                     @if (ViewBag.Error != "")
                     {
-                        <h4 style="color: #a00000">@ViewBag.Error</h4>
+                        <h4 style="color: #a00000">@ViewBag.Info</h4>
                     }
                 </div>
             </div>

@@ -14,8 +14,10 @@ namespace GradeNet.Infrastructure.Interfaces
         List<StudentViewModel> StudentsGet(int classId);
         ClassViewModel ClassGet(int classId);
         List<LessonViewModel> LessonsGet_ForClass(int classId);
+        LessonViewModel LessonGet(int lessonId);
         LessonViewModel GetLessonView(int lessonId, int previewTypeId);
         List<CommentsViewModel> StudentsCommentsGet(int studentId);
         List<EventViewModel> EventsGet_ForClass(int classId);
+        bool GradeAdd(string grade, string semester, int styleId, int studentId, int lessonId, string email);
     }
 }
