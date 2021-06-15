@@ -1,6 +1,6 @@
 ﻿@model List<GradeNet.Infrastructure.ViewModels.SubjectViewModel>
-@{ int i = 1; } 
-<h4>Tematy</h4> 
+@{ int i = 1; }
+<h4>Tematy</h4>
 <table>
     <tr>
         <th>
@@ -12,6 +12,7 @@
         <th>
             Temat
         </th>
+        <th></th>
     </tr>
     @foreach (var sb in Model)
     {
@@ -25,8 +26,12 @@
             <td width="100%">
                 @sb.Subject
             </td>
+            <td>
+                <input type="submit" value="Edytuj" />
+            </td>
         </tr>
         i++;
     }
 </table>
-    
+<br />
+<input type="submit" value="Dodaj" />
