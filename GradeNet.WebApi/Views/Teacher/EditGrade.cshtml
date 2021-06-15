@@ -1,0 +1,154 @@
+﻿@model GradeNet.Infrastructure.ViewModels.EditGradeViewModel
+
+@{ 
+    int[] x = { Model.ClassId, Model.LessonId };
+}
+
+<style>
+    .content {
+        border: 1px solid #aaa;
+        padding-bottom: 15px;
+        margin-top: 15px;
+    }
+
+    hr {
+        width: 95%;
+    }
+
+    .select {
+        width: 100%;
+        background: #fff4b911;
+        border-style: none;
+        border-bottom: 1px solid black;
+    }
+</style>
+
+<div class="row" style="padding: 0 15px 0 0;">
+    <div class="col-md-2">
+        @Html.Partial("~/Views/Teacher/_LeftSidePanel_Lesson.cshtml", new List<int>(x))
+    </div>
+    <div class="col-md-10 content">
+        <h4>Edytuj oceny:</h4>
+        <hr>
+        <div class="row" style="margin-bottom:10px;">
+            <div class="col-md-2">
+                Uczeń:
+            </div>
+            <div class="col-md-4">
+                @Model.StudentName
+                <input type="hidden" name="studentId" value="@Model.StudentId" />
+                <input type="hidden" name="studentName" value="@Model.StudentName" />
+            </div>
+        </div>
+        <div class="row" style="margin-bottom:10px;">
+            <div class="col-md-2">
+                Przedmiot:
+            </div>
+            <div class="col-md-4">
+                @Model.LessonName
+                <input type="hidden" name="lessonId" value="@Model.LessonId" />
+                <input type="hidden" name="lessonName" value="@Model.LessonName" />
+            </div>
+        </div>
+        <div class="row" style="margin-bottom:10px;">
+            <div class="col-md-12">
+                <h4>Lista ocen</h4>
+                <table>
+                    <tr>
+                        <th colspan="3" style="text-align: center;">Semestr I</th>
+                    </tr>
+                    @if (Model.GradesList.Where(xd => xd.Semester == 1).Any())
+                    {
+                        foreach (var gr in Model.GradesList.Where(xd => xd.Semester == 1))
+                        {
+                            <tr>
+                                <td width="20%">
+                                    @gr.Grade
+                                </td>
+                                <td>
+                                    <form action="CorrectGrade" method="POST">
+                                        <input type="hidden" name="studentId" value="@Model.StudentId" />
+                                        <input type="hidden" name="studentName" value="@Model.StudentName" />
+                                        <input type="hidden" name="lessonId" value="@Model.LessonId" />
+                                        <input type="hidden" name="lessonName" value="@Model.LessonName" />
+                                        <input type="hidden" name="classId" value="@Model.ClassId" />
+                                        <input type="hidden" name="studentGradeId" value="@gr.StudentGradeId" />
+                                        <input type="submit" value="Edytuj" />
+                                    </form>
+                                </td>
+                                <td>
+                                    <form action="CorrectGrade" method="POST">
+                                        <input type="hidden" name="studentId" value="@Model.StudentId" />
+                                        <input type="hidden" name="studentName" value="@Model.StudentName" />
+                                        <input type="hidden" name="lessonId" value="@Model.LessonId" />
+                                        <input type="hidden" name="lessonName" value="@Model.LessonName" />
+                                        <input type="hidden" name="classId" value="@Model.ClassId" />
+                                        <input type="hidden" name="studentGradeId" value="@gr.StudentGradeId" />
+                                        <input type="hidden" name="correctionType" value="delete" />
+                                        <input type="submit" value="Usuń" />
+                                    </form>
+                                </td>
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td colspan="3">
+                                Brak ocen do wyświetlenia
+                            </td>
+                        </tr>
+                    }
+                </table>
+                <br />
+                <table>
+                    <tr>
+                        <th colspan="3" style="text-align: center;">Semestr II</th>
+                    </tr>
+                    @if (Model.GradesList.Where(xd => xd.Semester == 2).Any())
+                    {
+                        foreach (var gr in Model.GradesList.Where(xd => xd.Semester == 2))
+                        {
+                            <tr>
+                                <td width="20%">
+                                    @gr.Grade
+                                </td>
+                                <td>
+                                    <form action="CorrectGrade" method="POST">
+                                        <input type="hidden" name="studentId" value="@Model.StudentId" />
+                                        <input type="hidden" name="studentName" value="@Model.StudentName" />
+                                        <input type="hidden" name="lessonId" value="@Model.LessonId" />
+                                        <input type="hidden" name="lessonName" value="@Model.LessonName" />
+                                        <input type="hidden" name="classId" value="@Model.ClassId" />
+                                        <input type="hidden" name="studentGradeId" value="@gr.StudentGradeId" />
+                                        <input type="submit" value="Edytuj" />
+                                    </form>
+                                </td>
+                                <td>
+                                    <form action="CorrectGrade" method="POST">
+                                        <input type="hidden" name="studentId" value="@Model.StudentId" />
+                                        <input type="hidden" name="studentName" value="@Model.StudentName" />
+                                        <input type="hidden" name="lessonId" value="@Model.LessonId" />
+                                        <input type="hidden" name="lessonName" value="@Model.LessonName" />
+                                        <input type="hidden" name="classId" value="@Model.ClassId" />
+                                        <input type="hidden" name="studentGradeId" value="@gr.StudentGradeId" />
+                                        <input type="hidden" name="correctionType" value="delete" />
+                                        <input type="submit" value="Usuń" />
+                                    </form>
+                                </td>
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td colspan="3">
+                                Brak ocen do wyświetlenia
+                            </td>
+                        </tr>
+                    }
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

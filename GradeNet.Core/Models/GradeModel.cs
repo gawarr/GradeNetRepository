@@ -8,7 +8,7 @@ namespace GradeNet.Core.Models
 {
     public class GradeModel
     {
-        public long GradeId { get; set; }
+        public long StudentGradeId { get; set; }
         public string Grade { get; set; }
         public string Style { get; set; }
         public int StudentId { get; set; }
@@ -16,9 +16,9 @@ namespace GradeNet.Core.Models
 
         public GradeModel() { }
 
-        public GradeModel(long gradeId, string grade, string style, int studentId, byte semester)
+        public GradeModel(long studentGradeId, string grade, string style, int studentId, byte semester)
         {
-            GradeId = gradeId;
+            StudentGradeId = studentGradeId;
             Grade = grade;
             Style = style;
             StudentId = studentId;

@@ -28,8 +28,23 @@
           <Parameter Name="LessonId" Type="int" Mode="In" />
           <Parameter Name="Email" Type="varchar" Mode="In" />
         </Function>
+        <Function Name="StudentGradesGet" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="School">
+          <Parameter Name="LessonId" Type="int" Mode="In" />
+          <Parameter Name="StudentId" Type="int" Mode="In" />
+        </Function>
         <Function Name="StudentGradesGet_ForLesson" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="School">
           <Parameter Name="LessonId" Type="int" Mode="In" />
+        </Function>
+        <Function Name="StudentGradeUpdate" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="School">
+          <Parameter Name="StudentGradeId" Type="bigint" Mode="In" />
+          <Parameter Name="Grade" Type="varchar" Mode="In" />
+          <Parameter Name="Semester" Type="bit" Mode="In" />
+          <Parameter Name="StyleId" Type="tinyint" Mode="In" />
+          <Parameter Name="Email" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="StudentGradeUpdate_Disable" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="School">
+          <Parameter Name="StudentGradeId" Type="bigint" Mode="In" />
+          <Parameter Name="Email" Type="varchar" Mode="In" />
         </Function>
         <Function Name="StudentsCommentsGet" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="School">
           <Parameter Name="StudentId" Type="int" Mode="In" />
@@ -121,6 +136,21 @@
             <Parameter Name="LessonId" Mode="In" Type="Int32" />
             <Parameter Name="Email" Mode="In" Type="String" />
           </FunctionImport>
+          <FunctionImport Name="StudentGradesGet" ReturnType="Collection(GradeNet_PRODModel.StudentGradesGet_Result)">
+            <Parameter Name="LessonId" Mode="In" Type="Int32" />
+            <Parameter Name="StudentId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="StudentGradeUpdate">
+            <Parameter Name="StudentGradeId" Mode="In" Type="Int64" />
+            <Parameter Name="Grade" Mode="In" Type="String" />
+            <Parameter Name="Semester" Mode="In" Type="Boolean" />
+            <Parameter Name="StyleId" Mode="In" Type="Byte" />
+            <Parameter Name="Email" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="StudentGradeUpdate_Disable">
+            <Parameter Name="StudentGradeId" Mode="In" Type="Int64" />
+            <Parameter Name="Email" Mode="In" Type="String" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="UserGet_Result">
           <Property Type="Int32" Name="UserId" Nullable="false" />
@@ -203,6 +233,13 @@
           <Property Type="String" Name="Shortcut" Nullable="false" MaxLength="5" />
           <Property Type="DateTime" Name="EventDate" Nullable="false" />
           <Property Type="String" Name="Description" Nullable="false" MaxLength="100" />
+        </ComplexType>
+        <ComplexType Name="StudentGradesGet_Result">
+          <Property Type="Int64" Name="StudentGradeId" Nullable="false" />
+          <Property Type="String" Name="Grade" Nullable="false" MaxLength="3" />
+          <Property Type="String" Name="Style" Nullable="false" MaxLength="255" />
+          <Property Type="Int32" Name="StudentId" Nullable="false" />
+          <Property Type="Boolean" Name="Semester" Nullable="false" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -341,6 +378,19 @@
             </ResultMapping>
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="StudentGradeAdd" FunctionName="GradeNet_PRODModel.Store.StudentGradeAdd" />
+          <FunctionImportMapping FunctionImportName="StudentGradesGet" FunctionName="GradeNet_PRODModel.Store.StudentGradesGet">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="GradeNet_PRODModel.StudentGradesGet_Result">
+                <ScalarProperty Name="StudentGradeId" ColumnName="StudentGradeId" />
+                <ScalarProperty Name="Grade" ColumnName="Grade" />
+                <ScalarProperty Name="Style" ColumnName="Style" />
+                <ScalarProperty Name="StudentId" ColumnName="StudentId" />
+                <ScalarProperty Name="Semester" ColumnName="Semester" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="StudentGradeUpdate" FunctionName="GradeNet_PRODModel.Store.StudentGradeUpdate" />
+          <FunctionImportMapping FunctionImportName="StudentGradeUpdate_Disable" FunctionName="GradeNet_PRODModel.Store.StudentGradeUpdate_Disable" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

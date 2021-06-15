@@ -5,6 +5,7 @@ using GradeNet.Infrastructure.Helpers;
 using GradeNet.Infrastructure.Interfaces;
 using GradeNet.Infrastructure.Repositories;
 using GradeNet.Infrastructure.ViewModels;
+using NLog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,6 +16,7 @@ namespace GradeNet.Infrastructure.Managers
 {
     public class TeacherManager : ITeacherManager
     {
+        private static Logger logger = LogManager.GetLogger("loggerRole");
         private readonly ITeacherRepository _teacherRepository;
 
         public TeacherManager()
@@ -42,8 +44,9 @@ namespace GradeNet.Infrastructure.Managers
         {
             var list = new List<StudentViewModel>();
             var result = _teacherRepository.StudentsGet(classId);
+            logger.Info($"StudentsGet(int {classId}) - Pobrano {result.Count()} uczniów dla klasy.");
 
-            if(result.Any()) 
+            if (result.Any())
                 list.AddRange(result.Select(x => new StudentViewModel(x.StudentId, x.FirstName, x.SecondName, x.Surname)));
 
             return list;
@@ -57,6 +60,8 @@ namespace GradeNet.Infrastructure.Managers
             classVM.StudentsList = new List<StudentViewModel>();
 
             var list = _teacherRepository.StudentsGet(classId);
+            logger.Info($"ClassGet(int {classId}) - Pobrano {list.Count()} uczniów dla klasy.");
+
             if (list.Any())
                 classVM.StudentsList.AddRange(list.Select(x => new StudentViewModel(x.StudentId, x.FirstName, x.SecondName, x.Surname)));
 
@@ -68,6 +73,7 @@ namespace GradeNet.Infrastructure.Managers
             var lessonsList = new List<LessonViewModel>();
 
             var list = _teacherRepository.LessonsGet_ForClass(classId);
+            logger.Info($"LessonsGet_ForClass(int {classId}) - Pobrano {list.Count()} lekcji dla klasy.");
             if (list.Any())
                 lessonsList.AddRange(list.Select(x => new LessonViewModel(x.LessonId, x.LessonName, classId)));
 
@@ -77,7 +83,7 @@ namespace GradeNet.Infrastructure.Managers
         public LessonViewModel LessonGet(int lessonId)
         {
             var model = _teacherRepository.LessonGet(lessonId);
-            var lessons = new LessonViewModel(model.LessonId, model.LessonName, model.ClassId, model.ClassName, model.TeacherId, 
+            var lessons = new LessonViewModel(model.LessonId, model.LessonName, model.ClassId, model.ClassName, model.TeacherId,
                 new UserDetailsViewModel(model.TeacherDetails.FirstName, model.TeacherDetails.SecondName, model.TeacherDetails.Surname));
 
             return lessons;
@@ -87,7 +93,7 @@ namespace GradeNet.Infrastructure.Managers
         {
             var model = _teacherRepository.LessonGet(lessonId);
 
-            var lessonVM = new LessonViewModel(model.LessonId, model.LessonName, model.ClassId, model.ClassName, model.TeacherId, 
+            var lessonVM = new LessonViewModel(model.LessonId, model.LessonName, model.ClassId, model.ClassName, model.TeacherId,
                 new UserDetailsViewModel(model.TeacherDetails.FirstName, model.TeacherDetails.SecondName, model.TeacherDetails.Surname));
 
             lessonVM.PreviewTypeId = previewTypeId;
@@ -98,6 +104,8 @@ namespace GradeNet.Infrastructure.Managers
                     var subjectsList = _teacherRepository.SubjectsGet(lessonId);
 
                     lessonVM.SubjectsList = new List<SubjectViewModel>();
+                    logger.Info($"GetLessonView(int {lessonId}, int {previewTypeId})) - Pobrano {lessonVM.SubjectsList.Count()} tematów dla lekcji.");
+
                     if (subjectsList.Any())
                         lessonVM.SubjectsList.AddRange(subjectsList.Select(x => new SubjectViewModel(x.SubjectId, x.Subject, x.SubjectDate)));
                     break;
@@ -107,14 +115,18 @@ namespace GradeNet.Infrastructure.Managers
                     var studentsList = _teacherRepository.StudentsGet(lessonVM.ClassId);
 
                     lessonVM.StudentsList = new List<StudentViewModel>();
+                    logger.Info($"GetLessonView(int {lessonId}, int {previewTypeId})) - Pobrano {lessonVM.StudentsList.Count()} studentów dla lekcji.");
+
                     if (studentsList.Any())
                         lessonVM.StudentsList.AddRange(studentsList.Select(x => new StudentViewModel(x.StudentId, x.FirstName, x.SecondName, x.Surname)));
 
                     var gradesList = _teacherRepository.StudentsGradesGet_ForLesson(lessonId);
 
                     lessonVM.StudentsGradesList = new List<GradeViewModel>();
+                    logger.Info($"GetLessonView(int {lessonId}, int {previewTypeId})) - Pobrano {lessonVM.StudentsGradesList.Count()} ocen dla studentów.");
+
                     if (gradesList.Any())
-                        lessonVM.StudentsGradesList.AddRange(gradesList.Select(x => new GradeViewModel(x.GradeId, x.Grade, x.Style, x.StudentId, ++x.Semester)));
+                        lessonVM.StudentsGradesList.AddRange(gradesList.Select(x => new GradeViewModel(x.StudentGradeId, x.Grade, x.Style, x.StudentId, ++x.Semester)));
                     break;
             }
 
@@ -126,6 +138,8 @@ namespace GradeNet.Infrastructure.Managers
             var commentsList = new List<CommentsViewModel>();
 
             var list = _teacherRepository.StudentsCommentsGet(studentId);
+            logger.Info($"StudentsCommentsGet(int {studentId})) - Pobrano {list.Count()} uwagi dla studenta.");
+
             if (list.Any())
                 commentsList.AddRange(list.Select(x => new CommentsViewModel(x.CommentId, x.Content, new StudentViewModel(studentId, x.Student.FirstName, x.Student.SecondName, x.Student.Surname), x.TeacherFirstName, x.TeacherSecondName, x.TeacherSurname, x.CreationTime)));
 
@@ -137,20 +151,37 @@ namespace GradeNet.Infrastructure.Managers
             var eventsList = new List<EventViewModel>();
 
             var list = _teacherRepository.EventsGet_ForClass(classId);
+            logger.Info($"EventsGet_ForClass(int {classId})) - Pobrano {list.Count()} zadarzeń dla klasy.");
+
             if (list.Any())
                 eventsList.AddRange(list.Select(x => new EventViewModel(x.EventId, x.EventType, x.Shortcut, x.EventDate, x.Description)));
 
             return eventsList;
         }
 
-        public bool GradeAdd(string grade, string semester, int styleId, int studentId, int lessonId, string email) 
+        public bool GradeAdd(string grade, string semester, int styleId, int studentId, int lessonId, string email)
         {
             bool isCorrect = GradeValidation(grade, semester, out int sem);
 
-            if(isCorrect)
+            if (isCorrect)
                 return _teacherRepository.GradeAdd(grade, sem, Convert.ToInt32(styleId), studentId, lessonId, email);
 
             return false;
+        }
+
+        public bool StudentGradeUpdate(long studentGradeId, string grade, string semester, int styleId, string email)
+        {
+            bool isCorrect = GradeValidation(grade, semester, out int sem);
+
+            if (isCorrect)
+                return _teacherRepository.StudentGradeUpdate(studentGradeId, grade, sem, styleId, email);
+
+            return false;
+        }
+
+        public bool StudentGradeUpdate_Disable(long studentGradeId, string email)
+        {
+            return _teacherRepository.StudentGradeUpdate_Disable(studentGradeId, email);
         }
 
         private bool GradeValidation(string grade, string semester, out int sem)
@@ -185,6 +216,19 @@ namespace GradeNet.Infrastructure.Managers
             }
 
             return true;
+        }
+
+        public List<GradeViewModel> StudentGradesGet(int studentId, int lessonId)
+        {
+            var gradesList = new List<GradeViewModel>();
+
+            var list = _teacherRepository.StudentGradesGet(studentId, lessonId);
+            logger.Info($"StudentGradesGet(int {studentId}, int {lessonId})) - Pobrano {list.Count()}ocen dla ucznia.");
+
+            if (list.Any())
+                gradesList.AddRange(list.Select(x => new GradeViewModel(x.StudentGradeId, x.Grade, x.Style, x.StudentId, ++x.Semester)));
+
+            return gradesList;
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using GradeNet.Infrastructure.Interfaces;
 using GradeNet.Infrastructure.ViewModels;
+using NLog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +12,7 @@ namespace GradeNet.WebApi.Controllers
 {
     public class HomeController : Controller
     {
+        private static Logger logger = LogManager.GetLogger("loggerRole");
         private readonly IUserManager _userManager;
 
         public HomeController(IUserManager userManager)
@@ -33,10 +35,12 @@ namespace GradeNet.WebApi.Controllers
             }
             if (_userManager.CheckLoginDetails(user))
             {
+                logger.Info($"Użytkownik {user.Email} zalogowany.");
                 FormsAuthentication.SetAuthCookie(user.Email, false);
                 _userManager.LastSuccessfulLoginSet(user.Email);
                 return RedirectToAction("Index");
             }
+            logger.Info($"Nieskuteczna próba logowania użytkownika {user.Email}.");
             ViewBag.Error = "Błędy login lub hasło.";
             return View();
         }
@@ -44,6 +48,7 @@ namespace GradeNet.WebApi.Controllers
         [Authorize]
         public ActionResult LogOut()
         {
+            logger.Info($"Wylogowywanie użytkownika {User.Identity.Name}.");
             FormsAuthentication.SignOut();
 
             return RedirectToAction("Index");

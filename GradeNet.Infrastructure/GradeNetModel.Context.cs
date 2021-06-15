@@ -209,5 +209,56 @@ namespace GradeNet.Infrastructure
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("StudentGradeAdd", gradeParameter, semesterParameter, styleIdParameter, studentIdParameter, lessonIdParameter, emailParameter);
         }
+    
+        public virtual ObjectResult<StudentGradesGet_Result> StudentGradesGet(Nullable<int> lessonId, Nullable<int> studentId)
+        {
+            var lessonIdParameter = lessonId.HasValue ?
+                new ObjectParameter("LessonId", lessonId) :
+                new ObjectParameter("LessonId", typeof(int));
+    
+            var studentIdParameter = studentId.HasValue ?
+                new ObjectParameter("StudentId", studentId) :
+                new ObjectParameter("StudentId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<StudentGradesGet_Result>("StudentGradesGet", lessonIdParameter, studentIdParameter);
+        }
+    
+        public virtual int StudentGradeUpdate(Nullable<long> studentGradeId, string grade, Nullable<bool> semester, Nullable<byte> styleId, string email)
+        {
+            var studentGradeIdParameter = studentGradeId.HasValue ?
+                new ObjectParameter("StudentGradeId", studentGradeId) :
+                new ObjectParameter("StudentGradeId", typeof(long));
+    
+            var gradeParameter = grade != null ?
+                new ObjectParameter("Grade", grade) :
+                new ObjectParameter("Grade", typeof(string));
+    
+            var semesterParameter = semester.HasValue ?
+                new ObjectParameter("Semester", semester) :
+                new ObjectParameter("Semester", typeof(bool));
+    
+            var styleIdParameter = styleId.HasValue ?
+                new ObjectParameter("StyleId", styleId) :
+                new ObjectParameter("StyleId", typeof(byte));
+    
+            var emailParameter = email != null ?
+                new ObjectParameter("Email", email) :
+                new ObjectParameter("Email", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("StudentGradeUpdate", studentGradeIdParameter, gradeParameter, semesterParameter, styleIdParameter, emailParameter);
+        }
+    
+        public virtual int StudentGradeUpdate_Disable(Nullable<long> studentGradeId, string email)
+        {
+            var studentGradeIdParameter = studentGradeId.HasValue ?
+                new ObjectParameter("StudentGradeId", studentGradeId) :
+                new ObjectParameter("StudentGradeId", typeof(long));
+    
+            var emailParameter = email != null ?
+                new ObjectParameter("Email", email) :
+                new ObjectParameter("Email", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("StudentGradeUpdate_Disable", studentGradeIdParameter, emailParameter);
+        }
     }
 }

@@ -37,12 +37,18 @@
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
+    <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
+      <HintPath>..\packages\NLog.4.7.10\lib\net45\NLog.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.IO.Compression" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Transactions" />
     <Reference Include="System.Web.ApplicationServices" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -76,12 +82,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>GradeNetModel.edmx</DependentUpon>
     </Compile>
-    <Compile Include="Helpers\HtmlRenderHelper.cs" />
     <Compile Include="Helpers\UserHelper.cs" />
     <Compile Include="Helpers\UsersRoleProvider.cs" />
-    <Compile Include="Interfaces\IHtmlRenderHelper.cs" />
     <Compile Include="Interfaces\ITeacherManager.cs" />
-    <Compile Include="Interfaces\ISchoolManager.cs" />
     <Compile Include="Interfaces\IUserManager.cs" />
     <Compile Include="LessonGet_Result.cs">
       <DependentUpon>GradeNetModel.tt</DependentUpon>
@@ -90,13 +93,14 @@
       <DependentUpon>GradeNetModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Managers\TeacherManager.cs" />
-    <Compile Include="Managers\SchoolManager.cs" />
     <Compile Include="Managers\UserManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\TeacherRepository.cs" />
-    <Compile Include="Repositories\SchoolRepository.cs" />
     <Compile Include="Repositories\UserRepository.cs" />
     <Compile Include="StudentGradesGet_ForLesson_Result.cs">
+      <DependentUpon>GradeNetModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="StudentGradesGet_Result.cs">
       <DependentUpon>GradeNetModel.tt</DependentUpon>
     </Compile>
     <Compile Include="StudentsCommentsGet_Result.cs">
@@ -114,6 +118,7 @@
     <Compile Include="UserGet_Result.cs">
       <DependentUpon>GradeNetModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="ViewModels\EditGradeViewModel.cs" />
     <Compile Include="ViewModels\AddGradeViewModel.cs" />
     <Compile Include="ViewModels\EventViewModel.cs" />
     <Compile Include="ViewModels\ClassEventsViewModel.cs" />
@@ -147,6 +152,12 @@
     <None Include="App.Config" />
     <None Include="GradeNetModel.edmx.diagram">
       <DependentUpon>GradeNetModel.edmx</DependentUpon>
+    </None>
+    <Content Include="NLog.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <None Include="NLog.xsd">
+      <SubType>Designer</SubType>
     </None>
     <None Include="packages.config" />
   </ItemGroup>

@@ -19,5 +19,8 @@ namespace GradeNet.Infrastructure.Interfaces
         List<CommentsViewModel> StudentsCommentsGet(int studentId);
         List<EventViewModel> EventsGet_ForClass(int classId);
         bool GradeAdd(string grade, string semester, int styleId, int studentId, int lessonId, string email);
+        bool StudentGradeUpdate(long studentGradeId, string grade, string semester, int styleId, string email);
+        List<GradeViewModel> StudentGradesGet(int studentId, int lessonId);
+        bool StudentGradeUpdate_Disable(long studentGradeId, string email);
     }
 }

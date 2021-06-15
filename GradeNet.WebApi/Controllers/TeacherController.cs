@@ -1,6 +1,7 @@
 ﻿using GradeNet.Infrastructure.Helpers;
 using GradeNet.Infrastructure.Interfaces;
 using GradeNet.Infrastructure.ViewModels;
+using NLog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,6 +14,7 @@ namespace GradeNet.WebApi.Controllers
     [Authorize(Roles = "Teacher")]
     public class TeacherController : Controller
     {
+        private static Logger logger = LogManager.GetLogger("loggerRole");
         private readonly ITeacherManager _teacherManager;
 
         public TeacherController(ITeacherManager teacherManager)
@@ -22,6 +24,7 @@ namespace GradeNet.WebApi.Controllers
 
         public ActionResult FindClass()
         {
+            logger.Debug($"{User.Identity.Name} - FindClass().");
             var years = _teacherManager.YearsGet();
 
             return View(years);
@@ -38,6 +41,7 @@ namespace GradeNet.WebApi.Controllers
         [HttpGet]
         public ActionResult Class(int classId)
         {
+            logger.Debug($"{User.Identity.Name} - Class(int {classId}).");
             var classVM = _teacherManager.ClassGet(classId);
 
             return View(classVM);
@@ -45,6 +49,7 @@ namespace GradeNet.WebApi.Controllers
 
         public ActionResult SelectLesson(int classId)
         {
+            logger.Debug($"{User.Identity.Name} - SelectLesson(int {classId}).");
             var lessons = _teacherManager.LessonsGet_ForClass(classId);
 
             return View(lessons);
@@ -53,6 +58,7 @@ namespace GradeNet.WebApi.Controllers
         [HttpGet]
         public ActionResult Lesson(int lessonId, int previewTypeId = 0)
         {
+            logger.Debug($"{User.Identity.Name} - Lesson(int {lessonId}, int {previewTypeId}).");
             var lessonVm = _teacherManager.GetLessonView(lessonId, previewTypeId);
 
             return View(lessonVm);
@@ -61,16 +67,17 @@ namespace GradeNet.WebApi.Controllers
         [HttpGet]
         public ActionResult AddGrade(int studentId, string studentName, int lessonId, int classId)
         {
-            var model = new AddGradeViewModel();
+            logger.Debug($"{User.Identity.Name} - AddGrade(int {studentId}, string {studentName}, int {lessonId}, int {classId}).");
+            var model = new AddGradeViewModel()
+            {
+                StudentId = studentId,
+                StudentName = studentName,
 
-            model.StudentId = studentId;
-            model.StudentName = studentName;
+                LessonId = lessonId,
+                LessonName = _teacherManager.LessonGet(lessonId).LessonName,
 
-            model.LessonId = lessonId;
-            var lesson = _teacherManager.LessonGet(lessonId);
-            model.LessonName = lesson.LessonName;
-
-            model.ClassId = classId;
+                ClassId = classId
+            };
 
             return View(model);
         }
@@ -78,15 +85,17 @@ namespace GradeNet.WebApi.Controllers
         [HttpPost]
         public ActionResult AddGrade(int studentId, string studentName, int lessonId, string lessonName, string grade, int style, string semester, int classId)
         {
-            var model = new AddGradeViewModel();
+            logger.Debug($"{User.Identity.Name} - AddGrade(int {studentId}, string {studentName}, int {lessonId}, string {grade}, int {style}, string {semester}, int {classId}).");
+            var model = new AddGradeViewModel()
+            {
+                StudentId = studentId,
+                StudentName = studentName,
 
-            model.StudentId = studentId;
-            model.StudentName = studentName;
+                LessonId = lessonId,
+                LessonName = String.IsNullOrEmpty(lessonName) ? _teacherManager.LessonGet(lessonId).LessonName : lessonName,
 
-            model.LessonId = lessonId;
-            model.LessonName = lessonName;
-
-            model.ClassId = classId;
+                ClassId = classId
+            };
 
             string teacherEmail = User.Identity.Name;
 
@@ -105,8 +114,86 @@ namespace GradeNet.WebApi.Controllers
         }
 
         [HttpGet]
+        public ActionResult EditGrade(int studentId, string studentName, int lessonId, string lessonName, int classId)
+        {
+            logger.Debug($"{User.Identity.Name} - EditGrade(int {studentId}, string {studentName}, int {lessonId}, string {lessonName}, int {classId}).");
+
+            var model = new EditGradeViewModel()
+            {
+                StudentId = studentId,
+                StudentName = studentName,
+
+                LessonId = lessonId,
+                LessonName = String.IsNullOrEmpty(lessonName) ? _teacherManager.LessonGet(lessonId).LessonName : lessonName,
+
+                ClassId = classId
+            };
+
+            model.GradesList = _teacherManager.StudentGradesGet(studentId, lessonId);
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public ActionResult CorrectGrade(int studentId, string studentName, int lessonId, string lessonName, int classId, long studentGradeId, string correctionType = "", string grade = "", string semester = "", int styleId = 0)
+        {
+            logger.Debug($"{User.Identity.Name} - CorrectGrade(int {studentId}, string {studentName}, int {lessonId}, string {lessonName}, int {classId}, long {studentGradeId}, string {correctionType}, string {grade}, string {semester}, int {styleId}).");
+
+            var model = new EditGradeViewModel()
+            {
+                StudentId = studentId,
+                StudentName = studentName,
+
+                LessonId = lessonId,
+                LessonName = String.IsNullOrEmpty(lessonName) ? _teacherManager.LessonGet(lessonId).LessonName : lessonName,
+
+                ClassId = classId,
+
+                StudentGradeId = studentGradeId
+            };
+
+            string teacherEmail = User.Identity.Name;
+            bool isCorrect = true;
+
+            switch (correctionType)
+            {
+                case "delete":
+                    isCorrect = _teacherManager.StudentGradeUpdate_Disable(studentGradeId, teacherEmail);
+                    if (isCorrect)
+                    {
+                        ViewBag.Info = "Usunięto ocenę";
+                        return View("Lesson", _teacherManager.GetLessonView(lessonId, 0));
+                    }
+                    else
+                    {
+                        ViewBag.Info = "Błąd usuwaniu oceny";
+                        return View(model);
+                    }
+
+                case "edit":
+                    isCorrect = _teacherManager.StudentGradeUpdate(studentGradeId, grade, semester, styleId, teacherEmail);
+                    if (isCorrect)
+                    {
+                        ViewBag.Info = "Edytowano ocenę";
+                        return View("Lesson", _teacherManager.GetLessonView(lessonId, 0));
+                    }
+                    else
+                    {
+                        ViewBag.Info = "Błąd przy edycji oceny";
+                        return View(model);
+                    }
+
+                default:
+                    break;
+            }
+
+            return View(model);
+        }
+
+        [HttpGet]
         public ActionResult SelectStudentFromClass(int classId)
         {
+            logger.Debug($"{User.Identity.Name} - SelectStudentFromClass(int {classId}).");
             ViewBag.ClassId = classId;
             var studentsList = _teacherManager.StudentsGet(classId);
 
@@ -116,6 +203,7 @@ namespace GradeNet.WebApi.Controllers
         [HttpGet]
         public ActionResult StudentsComments(int studentId, int classId)
         {
+            logger.Debug($"{User.Identity.Name} - StudentsComments(int {studentId}, int {classId}).");
             ViewBag.ClassId = classId;
             var commentsList = _teacherManager.StudentsCommentsGet(studentId);
 
@@ -125,6 +213,7 @@ namespace GradeNet.WebApi.Controllers
         [HttpGet]
         public ActionResult EditComment(int studentId, int commentId, int classId)
         {
+            logger.Debug($"{User.Identity.Name} - EditComment(int {studentId}, int {classId}).");
             ViewBag.ClassId = classId;
             //var commentsList = _teacherManager.StudentsCommentsGet(studentId);
 
@@ -136,6 +225,7 @@ namespace GradeNet.WebApi.Controllers
         [HttpGet]
         public ActionResult DeleteComment(int studentId, int commentId, int classId)
         {
+            logger.Debug($"{User.Identity.Name} - DeleteComment(int {studentId}, int {commentId}, int {classId}).");
             ViewBag.ClassId = classId;
             //var commentsList = _teacherManager.StudentsCommentsGet(studentId);
 
@@ -147,6 +237,7 @@ namespace GradeNet.WebApi.Controllers
         [HttpGet]
         public ActionResult ClassEvents(int classId)
         {
+            logger.Debug($"{User.Identity.Name} - ClassEvents(int {classId}).");
             var viewModel = new ClassEventsViewModel();
             viewModel.EventsList = _teacherManager.EventsGet_ForClass(classId);
             viewModel.Class = _teacherManager.ClassGet(classId);
@@ -157,6 +248,7 @@ namespace GradeNet.WebApi.Controllers
         [HttpGet]
         public ActionResult DeleteEvent(long eventId, int classId)
         {
+            logger.Debug($"{User.Identity.Name} - DeleteEvent(long {eventId}, int {classId}).");
             return View();
         }
     }

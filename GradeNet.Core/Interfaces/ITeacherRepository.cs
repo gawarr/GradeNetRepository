@@ -16,9 +16,12 @@ namespace GradeNet.Core.Interfaces
         List<LessonModel> LessonsGet_ForClass(int classId);
         LessonModel LessonGet(int lessonId);
         List<GradeModel> StudentsGradesGet_ForLesson(int lessonId);
+        List<GradeModel> StudentGradesGet(int studentId, int lessonId);
         List<SubjectModel> SubjectsGet(int lessonId);
         List<CommentsModel> StudentsCommentsGet(int studentId);
         List<EventModel> EventsGet_ForClass(int classId);
         bool GradeAdd(string grade, int semester, int styleId, int studentId, int lessonId, string email);
+        bool StudentGradeUpdate(long studentGradeId, string grade, int semester, int styleId, string email);
+        bool StudentGradeUpdate_Disable(long studentGradeId, string email);
     }
 }

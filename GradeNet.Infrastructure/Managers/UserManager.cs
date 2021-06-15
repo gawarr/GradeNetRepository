@@ -4,6 +4,7 @@ using GradeNet.Infrastructure.Helpers;
 using GradeNet.Infrastructure.Interfaces;
 using GradeNet.Infrastructure.Repositories;
 using GradeNet.Infrastructure.ViewModels;
+using NLog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +15,7 @@ namespace GradeNet.Infrastructure.Managers
 {
     public class UserManager : IUserManager
     {
+        private static Logger logger = LogManager.GetLogger("loggerRole");
         private readonly IUserRepository _userRepository;
 
         public UserManager()
@@ -32,7 +34,8 @@ namespace GradeNet.Infrastructure.Managers
             }
             catch (Exception ex)
             {
-                throw;
+                logger.Error($"GetUser(int {userId}) - {ex}.");
+                return new UserViewModel();
             }
         }
 
@@ -40,7 +43,11 @@ namespace GradeNet.Infrastructure.Managers
         {
             UserModel user = new UserModel(model.Email, UserHelper.MD5Hash(model.Password));
 
-            return _userRepository.CheckLoginDetails(user);
+            logger.Debug($"Rozpoczynam sprawdzanie danych logowania dla {user.Email}.");
+             bool flag =_userRepository.CheckLoginDetails(user);
+            logger.Debug($"Test sprawdzania danych logowania dla {user.Email} zakończony.");
+
+            return flag;
         }
 
         public void LastSuccessfulLoginSet(string email) =>
@@ -50,14 +57,17 @@ namespace GradeNet.Infrastructure.Managers
         {
             try
             {
+                logger.Debug($"Rozpoczynam pobieranie danych dla {email}.");
                 UserDetailsModel user = _userRepository.UserDetailsGet(email);
                 UserDetailsViewModel viewModel = new UserDetailsViewModel(user.FirstName, user.SecondName, user.Surname, user.ContactNumber, user.IsConfirmed, user.PESEL, user.Place, 
                                                                           user.Prefix, user.Street, user.HouseNumber, user.ApartmentNumber, user.PostalCode, user.PostOfficePlace);
+                logger.Debug($"Zakończone pobieranie danych dla {email}.");
                 return viewModel;
             }
             catch (Exception ex)
             {
-                throw;
+                logger.Error($"GetUserDetails(string {email}) - {ex}.");
+                return new UserDetailsViewModel();
             }
         }
     }
