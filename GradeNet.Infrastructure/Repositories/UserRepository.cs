@@ -1,5 +1,6 @@
 ﻿using GradeNet.Core.Interfaces;
 using GradeNet.Core.Models;
+using NLog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +11,7 @@ namespace GradeNet.Infrastructure.Repositories
 {
     public class UserRepository : IUserRepository
     {
+        private static Logger logger = LogManager.GetLogger("loggerRole");
         public UserModel GetUser(int userId)
         {
             try
@@ -25,7 +27,8 @@ namespace GradeNet.Infrastructure.Repositories
             }
             catch (Exception ex)
             {
-                throw;
+                logger.Error($"GetUser(int {userId}) - {ex}.");
+                return new UserModel();
             }
         }
 
@@ -44,7 +47,7 @@ namespace GradeNet.Infrastructure.Repositories
             }
             catch (Exception ex)
             {
-                //throw;
+                logger.Error($"CheckLoginDetails() - {ex}.");
                 return false;
             }
         }
@@ -58,31 +61,7 @@ namespace GradeNet.Infrastructure.Repositories
             }
             catch (Exception ex)
             {
-                throw;
-            }
-        }
-
-        public string MainRoleOfUserGet(string email)
-        {
-            try
-            {
-                string role = String.Empty;
-                using(GradeNet_Entities context = new GradeNet_Entities())
-                {
-                    var result = context.MainRolesOfUserGet(email).ToList();
-
-                    if (result.Count == 1)
-                        role = result[0];
-                    else
-                    {
-                        throw new Exception($"Błąd pobierania przypisanych ról głównych dla użytkownika : {email}.");
-                    }
-                }
-                return role;
-            }
-            catch (Exception ex)
-            {
-                throw;
+                logger.Error($"LastSuccessfulLoginSet(string {email}) - {ex}.");
             }
         }
 
@@ -102,7 +81,8 @@ namespace GradeNet.Infrastructure.Repositories
             }
             catch (Exception ex)
             {
-                throw;
+                logger.Error($"UserDetailsGet(string {email}) - {ex}.");
+                return new UserDetailsModel();
             }
         }
     }

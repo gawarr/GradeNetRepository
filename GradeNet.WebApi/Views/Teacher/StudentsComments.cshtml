@@ -57,7 +57,7 @@ else
                     <th width="60%">
                         Treść
                     </th>
-                    @*<th></th>*@
+                    <th></th>
                     <th></th>
                 </tr>
                 @foreach (var com in Model)
@@ -73,14 +73,14 @@ else
                         <td>
                             @com.Content
                         </td>
-                        @*<td>
-                                <form action="EditComment" method="get">
+                        <td>
+                                @*<form action="EditComment" method="get">
                                     <input type="hidden" name="commentId" value="@com.CommentId" />
                                     <input type="hidden" name="studentId" value="@com.Student.StudentId" />
-                                    <input type="hidden" name="classId" value="@ViewBag.ClassId" />
+                                    <input type="hidden" name="classId" value="@ViewBag.ClassId" />*@
                                     <input type="submit" value="Edytuj" />
-                                </form>
-                            </td>*@
+                                @*</form>*@
+                            </td>
                         <td>
                             <form action="DeleteComment" method="get">
                                 <input type="hidden" name="commentId" value="@com.CommentId" />

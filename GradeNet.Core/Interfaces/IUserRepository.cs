@@ -12,7 +12,6 @@ namespace GradeNet.Core.Interfaces
         UserModel GetUser(int userId);
         bool CheckLoginDetails(UserModel user);
         void LastSuccessfulLoginSet(string email);
-        string MainRoleOfUserGet(string email);
         UserDetailsModel UserDetailsGet(string email);
     }
 }
